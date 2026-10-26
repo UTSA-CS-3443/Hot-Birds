@@ -14,6 +14,7 @@ import java.io.IOException;
 public class MyObservationsController {
     @FXML private ListView<Observation> listView;
 
+    //Needs to be replaced with ObservationController method that returns list of observations.
     private final ObservableList<Observation> observations = FXCollections.observableArrayList();
 
     @FXML
@@ -46,7 +47,7 @@ public class MyObservationsController {
             }
         });
 
-        //test observations -----
+        //test observations (will be removed once model is set up) -----
         observations.add(new Observation("American Goldfinch", "redsparrow", 2, "Walker Ranch Park", "Sep 2 · 12:00 PM"));
         observations.add(new Observation("Eastern Bluebird", "redsparrow", 1, "Leon Creek Greenway", "Sep 1 · 9:00 AM"));
         observations.add(new Observation("Painted Bunting", "redsparrow", 1, "Crescent Bend Nature Park", "Aug 23 · 5:30 PM"));

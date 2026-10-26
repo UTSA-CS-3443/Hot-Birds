@@ -6,11 +6,12 @@ import javafx.scene.control.Label;
 import java.util.function.Consumer;
 
 public class ObservationRowController {
-    @FXML private Label nameLabel, observerLabel, countLabel, locationLabel, dateLabel;
+    @FXML private Label nameLabel, countLabel, locationLabel, dateLabel;
 
     @FXML private javafx.scene.shape.Circle avatar;
     @FXML private javafx.scene.image.ImageView birdIcon;
 
+    // Different color values for each bird in observation list.
     private static final java.util.Map<String, String> SPECIES_COLORS = java.util.Map.of(
             "American Goldfinch",     "#F3E3A0",
             "Eastern Bluebird",       "#B8D4F0",
@@ -20,7 +21,6 @@ public class ObservationRowController {
             "Great Blue Heron",       "#C5D3DE",
             "Red-bellied Woodpecker", "#EBC9C5"
     );
-
     private static final java.util.Map<String, String> ICON_COLORS = java.util.Map.of(
             "American Goldfinch",     "#8A6D00",
             "Eastern Bluebird",       "#1F4E8C",
@@ -34,12 +34,12 @@ public class ObservationRowController {
     private Observation item;
     private Consumer<Observation> onEdit, onDelete;
 
+    // Builds row using data given by an Observation.
     public void setData(Observation item, Consumer<Observation> onEdit, Consumer<Observation> onDelete){
         this.item = item;
         this.onEdit = onEdit;
         this.onDelete = onDelete;
         nameLabel.setText(item.getSpecies());
-        observerLabel.setText(item.getObserver());
         countLabel.setText(Integer.toString(item.getCount()));
         locationLabel.setText(item.getLocation());
         dateLabel.setText(item.getDate());

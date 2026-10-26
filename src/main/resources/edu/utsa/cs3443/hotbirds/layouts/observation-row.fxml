@@ -31,7 +31,6 @@
 
     <VBox prefWidth="170.0">
         <Label fx:id="nameLabel" text="Species" />
-        <Label fx:id="observerLabel" styleClass="subtext" text="Observer" />
     </VBox>
 
     <Label fx:id="countLabel" prefWidth="70.0" text="0 birds" />
