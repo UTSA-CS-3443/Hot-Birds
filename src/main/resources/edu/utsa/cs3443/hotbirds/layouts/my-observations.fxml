@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.MyObservationsController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0">
+         <children>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="220.0" styleClass="dark-green">
+               <padding>
+                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+               </padding>
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="188.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #D96B45; -fx-background-radius: 12PX;">
+                           <children>
+                              <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/bird.png" />
+                                 </image>
+                                 <effect>
+                                    <ColorAdjust brightness="1.0" />
+                                 </effect>
+                              </ImageView>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="12.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="115.0">
+                           <children>
+                              <Label styleClass="sidebar-app-name" text="Hot Birds" />
+                              <Label styleClass="sidebar-app-description" text="Regional Bird Counts" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="12.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="16.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label styleClass="navigation-title" text="NAVIGATION">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble">
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/house-white.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="6.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label styleClass="nav-location-text" text="Dashboard" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble-selected">
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/notebook-tabs-orange.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="6.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label styleClass="nav-location-text" text="My Observations" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble">
+                     <children>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/plus-circle.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="6.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label styleClass="nav-location-text" text="New Observation" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="804.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="77.0" prefWidth="804.0" style="-fx-border-color: transparent transparent #E3E8E5 transparent;" styleClass="white">
+                     <padding>
+                        <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
+                     </padding>
+                     <children>
+                        <VBox alignment="BOTTOM_LEFT" prefHeight="46.0" prefWidth="203.0">
+                           <children>
+                              <Label styleClass="page-subtitle" text="NAME'S LOG">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="39.0" prefWidth="191.0" styleClass="page-title" text="My Observations" />
+                           </children>
+                        </VBox>
+                        <Pane prefHeight="44.0" prefWidth="306.0" />
+                        <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" styleClass="new-observation-button" text="New Observation">
+                           <graphic>
+                              <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true" styleClass="new-observation-button">
+                                 <image>
+                                    <Image url="@../images/plus-circle.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-3.0" top="1.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="95.0" styleClass="profile-button" text="NAME">
+                           <graphic>
+                              <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="new-observation-button">
+                                 <image>
+                                    <Image url="@../images/chevron-right.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="8.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets right="-4.0" />
+                           </padding>
+                        </Button>
+                     </children></HBox>
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="651.0" prefWidth="764.0" styleClass="card">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <VBox prefHeight="51.0" prefWidth="762.0">
+                           <children>
+                              <Label styleClass="heading" text="Observation Records">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="12.0" />
+                                 </font></Label>
+                              <Label styleClass="subtext" text="# records">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="12.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="1.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                           </padding>
+                        </VBox>
+                        <HBox prefHeight="35.0" prefWidth="764.0">
+                           <styleClass>
+                              <String fx:value="table-header" />
+                              <String fx:value="background" />
+                           </styleClass>
+                           <padding>
+                              <Insets bottom="10.0" left="16.0" right="16.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <Label prefHeight="15.0" prefWidth="231.0" text="Specices" />
+                              <Label prefHeight="15.0" prefWidth="110.0" text="Count" />
+                              <Label prefHeight="15.0" prefWidth="128.0" text="Location" />
+                              <Label prefHeight="15.0" prefWidth="189.0" text="Date" />
+                              <Label prefHeight="15.0" prefWidth="83.0" text="Edit/Delete" />
+                           </children></HBox>
+                        <ListView fx:id="listView" prefHeight="507.0" prefWidth="764.0" style="-fx-background-insets: 0;" styleClass="clean-list" />
+                        <HBox prefHeight="39.0" prefWidth="764.0" styleClass="table-footer">
+                           <children>
+                              <Label styleClass="subtext" text="Showing # of # records">
+                                 <HBox.margin>
+                                    <Insets bottom="12.0" left="16.0" top="12.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children></HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

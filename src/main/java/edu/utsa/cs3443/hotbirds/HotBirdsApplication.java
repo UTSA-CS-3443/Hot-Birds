@@ -3,16 +3,17 @@ package edu.utsa.cs3443.hotbirds;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class HotBirdsApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("layouts/hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/my-observations.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1024, 768);
+        stage.setTitle("Hot Birds");
         stage.setScene(scene);
         stage.show();
     }

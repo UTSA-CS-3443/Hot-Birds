@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>edu.utsa.cs3443.hotbirds/edu.utsa.cs3443.hotbirds.HelloApplication</mainClass>
+                            <mainClass>edu.utsa.cs3443.hotbirds/edu.utsa.cs3443.hotbirds.HotBirdsApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
