@@ -15,6 +15,7 @@ public class HotBirdsApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1024, 768);
         stage.setTitle("Hot Birds");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }
