@@ -3,11 +3,11 @@ package edu.utsa.cs3443.hotbirds.model;
 import java.io.*;
 import java.util.ArrayList;
 
-public class ObservationsManager {
+public class ObservationManager {
     ArrayList<Observation> observationArrayList;
     String filePath = "data/observations.csv";
 
-    public ObservationsManager() {
+    public ObservationManager() {
         observationArrayList = new ArrayList<Observation>();
     }
 
