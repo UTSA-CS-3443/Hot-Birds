@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.MyObservationsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.MyObservationsController">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0">
          <children>
@@ -94,7 +94,7 @@
                         <Label styleClass="nav-location-text" text="My Observations" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble">
+                  <HBox onMouseClicked="#handleAdd" prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble">
                      <children>
                         <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -130,9 +130,9 @@
                            </children>
                         </VBox>
                         <Pane prefHeight="44.0" prefWidth="306.0" />
-                        <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" styleClass="new-observation-button" text="New Observation">
+                        <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAdd" prefHeight="32.0" prefWidth="158.0" styleClass="new-observation-button" text="New Observation">
                            <graphic>
-                              <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true" styleClass="new-observation-button">
+                              <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/icons/plus-circle.png" />
                                  </image>
@@ -144,7 +144,7 @@
                         </Button>
                         <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="95.0" styleClass="profile-button" text="Name">
                            <graphic>
-                              <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="new-observation-button">
+                              <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/icons/chevron-right.png" />
                                  </image>
@@ -197,7 +197,7 @@
                               <Label prefHeight="15.0" prefWidth="189.0" text="Date" />
                               <Label prefHeight="15.0" prefWidth="71.0" text="Edit/Delete" />
                            </children></HBox>
-                        <ListView fx:id="listView" prefHeight="507.0" prefWidth="764.0" style="-fx-background-insets: 0;" styleClass="clean-list" />
+                        <ListView fx:id="listView" prefHeight="507.0" prefWidth="764.0" styleClass="clean-list" />
                         <HBox prefHeight="39.0" prefWidth="764.0" styleClass="table-footer">
                            <children>
                               <Label styleClass="subtext" text="Showing # of # records">

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.AddObservationController">
+    <VBox maxHeight="-Infinity" maxWidth="676.0" spacing="22.0" styleClass="dialog-card">
+        <VBox spacing="4.0">
+            <Label styleClass="dialog-title" text="Add Observation" />
+            <Label styleClass="subtext" text="All fields are required to be filled out." />
+        </VBox>
+
+        <VBox spacing="6.0">
+            <Label styleClass="page-subtitle" text="SPECIES" />
+            <ComboBox fx:id="speciesBox" maxWidth="Infinity" promptText="Select a species" styleClass="input-field" />
+            <Label styleClass="subtext" text="Choose the species that you have observed." />
+        </VBox>
+
+        <HBox spacing="12.0">
+            <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                <Label styleClass="page-subtitle" text="DATE SEEN" />
+                <DatePicker fx:id="datePicker" maxWidth="Infinity" prefWidth="222.0" styleClass="input-field" />
+            </VBox>
+            <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                <Label styleClass="page-subtitle" text="TIME SEEN" />
+                <TextField fx:id="timeField" promptText="6:40 AM" styleClass="input-field" />
+            </VBox>
+        </HBox>
+
+        <VBox spacing="6.0">
+            <Label styleClass="page-subtitle" text="QUANTITY SEEN" />
+            <TextField fx:id="quantityField" promptText="1" styleClass="input-field" />
+        </VBox>
+
+        <VBox spacing="6.0">
+            <Label styleClass="page-subtitle" text="LOCATION SEEN" />
+            <TextField fx:id="locationField" promptText="Address or park name" styleClass="input-field" />
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="12.0">
+            <Button onAction="#handleCancel" prefHeight="40.0" prefWidth="79.0" styleClass="edit-button" text="Cancel" />
+            <Button onAction="#handleNext" styleClass="next-button" text="Next" />
+        </HBox>
+    </VBox>
+</StackPane>

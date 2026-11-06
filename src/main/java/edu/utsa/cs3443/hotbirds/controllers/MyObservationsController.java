@@ -10,6 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import java.io.IOException;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 public class MyObservationsController {
     @FXML private ListView<Observation> listView;
@@ -32,8 +38,6 @@ public class MyObservationsController {
                     throw new RuntimeException(e);
                 }
             }
-
-
 
             @Override
             public void updateItem(Observation item, boolean empty) {
@@ -63,25 +67,38 @@ public class MyObservationsController {
         observations.add(new Observation("Great Blue Heron", "Maya", 1, "Lower Creek Bend", "Sep 27 · 5:38 PM"));
         observations.add(new Observation("Red-bellied Woodpecker", "Maya", 2, "Oak Ridge Trail", "Sep 27 · 4:12 PM"));
         observations.add(new Observation("American Goldfinch", "redsparrow", 2, "Walker Ranch Park", "Sep 2 · 12:00 PM"));
-        observations.add(new Observation("Eastern Bluebird", "redsparrow", 1, "Leon Creek Greenway", "Sep 1 · 9:00 AM"));
-        observations.add(new Observation("Painted Bunting", "redsparrow", 1, "Crescent Bend Nature Park", "Aug 23 · 5:30 PM"));
-        observations.add(new Observation("Spotted Towhee", "greyduckling", 1, "Landa Park", "Oct 2 · 7:00 AM"));
-        observations.add(new Observation("Red-breasted Nuthatch", "greyduckling", 1, "Crescent Bend Nature Park", "Sep 25 · 5:00 PM"));
-        observations.add(new Observation("Great Blue Heron", "Maya", 1, "Lower Creek Bend", "Sep 27 · 5:38 PM"));
-        observations.add(new Observation("Red-bellied Woodpecker", "Maya", 2, "Oak Ridge Trail", "Sep 27 · 4:12 PM"));
-        observations.add(new Observation("American Goldfinch", "redsparrow", 2, "Walker Ranch Park", "Sep 2 · 12:00 PM"));
-        observations.add(new Observation("Eastern Bluebird", "redsparrow", 1, "Leon Creek Greenway", "Sep 1 · 9:00 AM"));
-        observations.add(new Observation("Painted Bunting", "redsparrow", 1, "Crescent Bend Nature Park", "Aug 23 · 5:30 PM"));
-        observations.add(new Observation("Spotted Towhee", "greyduckling", 1, "Landa Park", "Oct 2 · 7:00 AM"));
-        observations.add(new Observation("Red-breasted Nuthatch", "greyduckling", 1, "Crescent Bend Nature Park", "Sep 25 · 5:00 PM"));
-        observations.add(new Observation("Great Blue Heron", "Maya", 1, "Lower Creek Bend", "Sep 27 · 5:38 PM"));
-        observations.add(new Observation("Red-bellied Woodpecker", "Maya", 2, "Oak Ridge Trail", "Sep 27 · 4:12 PM"));
         // ----------------------
     }
-    public void add(Observation observation) {observations.add(observation);}
 
+    //opens add observation popup
+    @FXML
+    private void handleAdd() {
+        try {
+            Stage dialog = new Stage();
+            dialog.initOwner(listView.getScene().getWindow());
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initStyle(StageStyle.TRANSPARENT);
+
+            FXMLLoader loader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/add-observation.fxml"));
+            Scene scene = new Scene(loader.load());
+            scene.setFill(Color.TRANSPARENT);
+            scene.getStylesheets().add(HotBirdsApplication.class.getResource("styles/theme.css").toExternalForm());
+            dialog.setScene(scene);
+            Window owner = dialog.getOwner();
+            dialog.setOnShown(e -> {
+                dialog.setX(owner.getX() + (owner.getWidth() - dialog.getWidth()) / 2);
+                dialog.setY(owner.getY() + (owner.getHeight() - dialog.getHeight()) / 2);
+            });
+            dialog.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void edit(Observation observation) {
         //open edit ui
         listView.refresh();
     }
+
+
 }
