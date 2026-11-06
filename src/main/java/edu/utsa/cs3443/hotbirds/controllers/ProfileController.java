@@ -1,5 +1,7 @@
-package edu.utsa.cs3443.espi_test_project;
+package edu.utsa.cs3443.hotbirds.controllers;
 
+import edu.utsa.cs3443.hotbirds.model.User;
+import edu.utsa.cs3443.hotbirds.model.UserManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

@@ -10,7 +10,7 @@
 <VBox alignment="CENTER" spacing="12.0"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="edu.utsa.cs3443.espi_test_project.LoginController">
+      fx:controller="edu.utsa.cs3443.hotbirds.controllers.LoginController">
     <padding>
         <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
     </padding>
