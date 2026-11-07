@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.AddObservationController">
+    <VBox maxHeight="-Infinity" maxWidth="676.0" spacing="22.0" styleClass="dialog-card">
+        <VBox spacing="4.0">
+            <Label prefHeight="81.0" prefWidth="333.0" styleClass="dialog-title" text="Are you sure you want to delete this observation?" wrapText="true" />
+            <Label styleClass="subtext" text="This action cannot be undone." textAlignment="CENTER">
+            <VBox.margin>
+               <Insets left="70.0" />
+            </VBox.margin></Label>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="12.0">
+            <Button onAction="#handleCancel" prefHeight="40.0" prefWidth="79.0" styleClass="edit-button" text="Cancel" />
+            <Button onAction="#handleNext" style="-fx-background-color: #D32F2F;" styleClass="next-button" text="Yes, delete" />
+        </HBox>
+    </VBox>
+</StackPane>

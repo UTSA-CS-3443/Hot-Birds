@@ -208,6 +208,16 @@
 
 .delete-button:hover { -fx-background-color: #A94441; }
 
+.delete-button-big {
+    -fx-background-color: #D32F2F;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
 .next-button {
     -fx-background-color: #17352D;
     -fx-background-radius: 10px;
