@@ -8,17 +8,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObservationsManager {
+public class ObservationManager {
     private static final String HEADER = "User,Species,Quantity,Time,AM or PM,Date,Location,Location Nickname";
 
     private final ArrayList<Observation> observationArrayList = new ArrayList<>();
     private final Path filePath;
 
-    public ObservationsManager() {
+    public ObservationManager() {
         this("data/observations.csv");
     }
 
-    public ObservationsManager(String filePath) {
+    public ObservationManager(String filePath) {
         this.filePath = Path.of(filePath);
     }
 

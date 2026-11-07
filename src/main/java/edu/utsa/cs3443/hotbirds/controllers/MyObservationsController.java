@@ -2,7 +2,7 @@ package edu.utsa.cs3443.hotbirds.controllers;
 
 import edu.utsa.cs3443.hotbirds.HotBirdsApplication;
 import edu.utsa.cs3443.hotbirds.model.Observation;
-import edu.utsa.cs3443.hotbirds.model.ObservationsManager;
+import edu.utsa.cs3443.hotbirds.model.ObservationManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ import java.io.IOException;
 public class MyObservationsController {
     @FXML private ListView<Observation> listView;
 
-    private final ObservationsManager manager = new ObservationsManager();
+    private final ObservationManager manager = new ObservationManager();
     private final ObservableList<Observation> observations = FXCollections.observableArrayList();
 
     @FXML
