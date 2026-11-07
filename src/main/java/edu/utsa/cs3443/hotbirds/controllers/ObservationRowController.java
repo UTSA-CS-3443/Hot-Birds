@@ -36,13 +36,14 @@ public class ObservationRowController {
 
     // Builds row using data given by an Observation.
     public void setData(Observation item, Consumer<Observation> onEdit, Consumer<Observation> onDelete){
+
         this.item = item;
         this.onEdit = onEdit;
         this.onDelete = onDelete;
         nameLabel.setText(item.getSpecies());
         countLabel.setText(Integer.toString(item.getCount()));
         locationLabel.setText(item.getLocation());
-        dateLabel.setText(item.getDate());
+        dateLabel.setText(item.getDisplayDate());
 
         String species = item.getSpecies();
         avatar.setFill(javafx.scene.paint.Color.web(SPECIES_COLORS.getOrDefault(species, "#DDE3E0")));

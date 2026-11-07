@@ -2,29 +2,38 @@ package edu.utsa.cs3443.hotbirds.controllers;
 
 import edu.utsa.cs3443.hotbirds.HotBirdsApplication;
 import edu.utsa.cs3443.hotbirds.model.Observation;
+import edu.utsa.cs3443.hotbirds.model.ObservationsManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import java.io.IOException;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
+import java.io.IOException;
+
 public class MyObservationsController {
     @FXML private ListView<Observation> listView;
 
-    //Needs to be replaced with ObservationController method that returns list of observations.
+    private final ObservationsManager manager = new ObservationsManager();
     private final ObservableList<Observation> observations = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        try {
+            manager.loadObservations();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        observations.setAll(manager.getObservationArrayList());
+
         listView.setItems(observations);
         listView.setCellFactory(lv -> new ListCell<>() {
             private Node root;
@@ -45,32 +54,15 @@ public class MyObservationsController {
                 if (empty || item == null) {
                     setGraphic(null);
                 } else {
-                    rowController.setData(item, MyObservationsController.this::edit, observations::remove);
+                    rowController.setData(item, MyObservationsController.this::edit,
+                            MyObservationsController.this::delete);
                     setGraphic(root);
                 }
             }
         });
-
-        //test observations (will be removed once model is set up) -----
-        observations.add(new Observation("American Goldfinch", "redsparrow", 2, "Walker Ranch Park", "Sep 2 · 12:00 PM"));
-        observations.add(new Observation("Eastern Bluebird", "redsparrow", 1, "Leon Creek Greenway", "Sep 1 · 9:00 AM"));
-        observations.add(new Observation("Painted Bunting", "redsparrow", 1, "Crescent Bend Nature Park", "Aug 23 · 5:30 PM"));
-        observations.add(new Observation("Spotted Towhee", "greyduckling", 1, "Landa Park", "Oct 2 · 7:00 AM"));
-        observations.add(new Observation("Red-breasted Nuthatch", "greyduckling", 1, "Crescent Bend Nature Park", "Sep 25 · 5:00 PM"));
-        observations.add(new Observation("Great Blue Heron", "Maya", 1, "Lower Creek Bend", "Sep 27 · 5:38 PM"));
-        observations.add(new Observation("Red-bellied Woodpecker", "Maya", 2, "Oak Ridge Trail", "Sep 27 · 4:12 PM"));
-        observations.add(new Observation("American Goldfinch", "redsparrow", 2, "Walker Ranch Park", "Sep 2 · 12:00 PM"));
-        observations.add(new Observation("Eastern Bluebird", "redsparrow", 1, "Leon Creek Greenway", "Sep 1 · 9:00 AM"));
-        observations.add(new Observation("Painted Bunting", "redsparrow", 1, "Crescent Bend Nature Park", "Aug 23 · 5:30 PM"));
-        observations.add(new Observation("Spotted Towhee", "greyduckling", 1, "Landa Park", "Oct 2 · 7:00 AM"));
-        observations.add(new Observation("Red-breasted Nuthatch", "greyduckling", 1, "Crescent Bend Nature Park", "Sep 25 · 5:00 PM"));
-        observations.add(new Observation("Great Blue Heron", "Maya", 1, "Lower Creek Bend", "Sep 27 · 5:38 PM"));
-        observations.add(new Observation("Red-bellied Woodpecker", "Maya", 2, "Oak Ridge Trail", "Sep 27 · 4:12 PM"));
-        observations.add(new Observation("American Goldfinch", "redsparrow", 2, "Walker Ranch Park", "Sep 2 · 12:00 PM"));
-        // ----------------------
     }
 
-    //opens add observation popup
+    // opens add observation popup
     @FXML
     private void handleAdd() {
         try {
@@ -90,15 +82,23 @@ public class MyObservationsController {
                 dialog.setY(owner.getY() + (owner.getHeight() - dialog.getHeight()) / 2);
             });
             dialog.showAndWait();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void edit(Observation observation) {
-        //open edit ui
+        // open edit ui, then manager.updateObservation(observation) to save
         listView.refresh();
     }
 
-
+    private void delete(Observation observation) {
+        try {
+            if (manager.deleteObservation(observation)) { // removes it from the ArrayList and the file
+                observations.remove(observation);         // removes it from the list on screen
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
