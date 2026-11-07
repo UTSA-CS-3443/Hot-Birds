@@ -201,7 +201,7 @@
 
 .delete-button {
     -fx-background-color: #C0504D;
-    -fx-background-radius: 15px;
+    -fx-background-radius: 12px;
     -fx-cursor: hand;
     -fx-padding: 8px;
 }

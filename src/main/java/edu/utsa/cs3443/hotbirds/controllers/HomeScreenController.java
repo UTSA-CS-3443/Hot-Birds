@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 public class HomeScreenController {
+    //This class is only a skeleton right now, I'm still working on it -Makaila
 
     @FXML
     private Label totalBirdCount;
