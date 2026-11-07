@@ -10,6 +10,12 @@
     -fx-font-size: 16px;
 }
 
+.subheading {
+    -fx-text-fill: #18342C;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
 .subtext {
     -fx-text-fill: #66766F;
     -fx-font-size: 12px;
