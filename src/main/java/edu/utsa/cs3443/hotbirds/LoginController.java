@@ -35,7 +35,7 @@ public class LoginController {
     public void initialize() {
         if (errorLabel != null) {
             errorLabel.setText("");
-            //observationManager = ObservationManager.getInstance();
+            //observationManager = ObservationManager.getInstance(); <-Just an idea for future use, not sure if I want to use
         }
     }
 

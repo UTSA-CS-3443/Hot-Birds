@@ -72,8 +72,7 @@ public class ProfileController {
         }
     }
 
-    //TO DO: Fix this method so it works for any of the screens as long as they create an instance of ProfileController
-    //Whenever the User button is clicked on any of the pages, call upon this method to switch to Profile-screen
+    //TO DO: Fix this method so that we can call upon a screen navigation class to do our navigation for us and reduce redundant code
     @FXML
     void handleUser() {
         try{
