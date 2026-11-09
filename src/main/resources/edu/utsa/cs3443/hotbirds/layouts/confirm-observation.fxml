@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.AddObservationController">
+<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.AddObservationController">
     <VBox maxHeight="-Infinity" maxWidth="676.0" spacing="22.0" styleClass="dialog-card">
         <VBox spacing="4.0">
             <Label styleClass="dialog-title" text="Confirm Observation" />

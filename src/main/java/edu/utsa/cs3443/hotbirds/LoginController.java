@@ -1,10 +1,16 @@
-package edu.utsa.cs3443.hotbirds.controllers;
+package edu.utsa.cs3443.hotbirds;
 
+import edu.utsa.cs3443.hotbirds.model.User;
 import edu.utsa.cs3443.hotbirds.model.UserManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class LoginController {
     @FXML
@@ -22,12 +28,18 @@ public class LoginController {
         this.userManager = userManager;
     }
 
+    private Stage mainStage;
+
+
     @FXML
     public void initialize() {
         if (errorLabel != null) {
             errorLabel.setText("");
+            //observationManager = ObservationManager.getInstance();
         }
     }
+
+    @FXML public void setMainStage(Stage mainStage) { this.mainStage = mainStage; }
 
     @FXML
     private void onSignIn() {
@@ -41,6 +53,9 @@ public class LoginController {
         } else {
             errorLabel.setText("Email or password is incorrect.");
         }
+        //observationManager.setUser(user);
+
+
     }
 
     @FXML

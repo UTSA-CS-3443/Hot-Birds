@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds.controllers;
+package edu.utsa.cs3443.hotbirds;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

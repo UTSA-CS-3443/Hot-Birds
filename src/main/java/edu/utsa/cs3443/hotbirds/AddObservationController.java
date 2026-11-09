@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds.controllers;
+package edu.utsa.cs3443.hotbirds;
 
 import edu.utsa.cs3443.hotbirds.model.Observation;
 import javafx.collections.FXCollections;
@@ -7,7 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.time.format.DateTimeFormatter;
 
 public class AddObservationController {
     @FXML private ComboBox<String> speciesBox;
