@@ -25,19 +25,24 @@ public class MyObservationsController {
     private final ObservationManager manager = new ObservationManager();
     private final ObservableList<Observation> observations = FXCollections.observableArrayList();
 
+    // When my-observations.fxml loads: loads saved data and sets up the list
     @FXML
     public void initialize() {
+        // Read the CSV into the manager's ArrayList
         try {
             manager.loadObservations();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Copy the manager's data into the ObservableList that the ListView displays
         observations.setAll(manager.getObservationArrayList());
-
         listView.setItems(observations);
+
+        // Tells the ListView how to build each row
         listView.setCellFactory(lv -> new ListCell<>() {
-            private Node root;
-            private ObservationRowController rowController;
+            private Node root; // The row's layout
+            private ObservationRowController rowController; // Controller for the row
+            // Runs once per cell: load the row layout a single time and reuse it
             {
                 try {
                     FXMLLoader loader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/observation-row.fxml"));
@@ -48,40 +53,50 @@ public class MyObservationsController {
                 }
             }
 
+            // Called by JavaFX whenever this cell is shown, scrolled to, or its data changes
             @Override
             public void updateItem(Observation item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
+                    // No data for this cell so show nothing
                     setGraphic(null);
                 } else {
+                    // Fill the row with this observation and connect its Edit/Delete buttons to this controllers edit and delete methods (found below).
                     rowController.setData(item, MyObservationsController.this::edit,
                             MyObservationsController.this::delete);
-                    setGraphic(root);
+                    setGraphic(root); // display the row
                 }
             }
         });
     }
 
-    // opens add observation popup
+    // Runs when the New Observation button or nav item is clicked
     @FXML
     private void handleAdd() {
         try {
+            // Create a popup window that sits on top of the main window and blocks it until closed
             Stage dialog = new Stage();
             dialog.initOwner(listView.getScene().getWindow());
             dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initStyle(StageStyle.TRANSPARENT);
+            dialog.initStyle(StageStyle.TRANSPARENT); // No title bar and allows for rounded corners
 
+            // Load the popup layout and make its background transparent
             FXMLLoader loader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/add-observation.fxml"));
             Scene scene = new Scene(loader.load());
             scene.setFill(Color.TRANSPARENT);
+
+            // Giving Stylesheet to the popup
             scene.getStylesheets().add(HotBirdsApplication.class.getResource("styles/theme.css").toExternalForm());
             dialog.setScene(scene);
+
+            // Centers the popup over the main window
             Window owner = dialog.getOwner();
             dialog.setOnShown(e -> {
                 dialog.setX(owner.getX() + (owner.getWidth() - dialog.getWidth()) / 2);
                 dialog.setY(owner.getY() + (owner.getHeight() - dialog.getHeight()) / 2);
             });
-            dialog.showAndWait();
+
+            dialog.showAndWait(); // Blocks interaction until popup is closed
         } catch (IOException e) {
             e.printStackTrace();
         }

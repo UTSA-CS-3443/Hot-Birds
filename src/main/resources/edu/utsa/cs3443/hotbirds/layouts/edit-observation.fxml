@@ -11,14 +11,6 @@
          <HBox prefHeight="134.0" prefWidth="403.0">
             <children>
                   <Label prefHeight="32.0" prefWidth="300.0" styleClass="dialog-title" text="Edit Observation" />
-               <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="91.0" styleClass="delete-button-big" text="Delete" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-                  <HBox.margin>
-                     <Insets />
-                  </HBox.margin>
-               </Button>
             </children>
          </HBox>
             <Label styleClass="subtext" text="All fields are required to be filled out." />
@@ -52,6 +44,15 @@
         </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="12.0">
+         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="91.0" styleClass="delete-button-big" text="Delete" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+         </Button>
+         <Pane prefHeight="40.0" prefWidth="53.0" />
             <Button onAction="#handleCancel" prefHeight="40.0" prefWidth="79.0" styleClass="edit-button" text="Cancel" />
             <Button onAction="#handleNext" styleClass="next-button" text="Confirm changes" />
         </HBox>
