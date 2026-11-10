@@ -67,7 +67,7 @@ public class MyObservationsController {
                     // No data for this cell so show nothing
                     setGraphic(null);
                 } else {
-                    // Fill the row with this observation and connect its Edit/Delete buttons to this controllers edit and delete methods (found below).
+                    // Fill the row with this observation and connect its row Edit/Delete buttons to this controllers edit and delete methods (found below)
                     rowController.setData(item, MyObservationsController.this::edit,
                             MyObservationsController.this::delete);
                     setGraphic(root); // display the row
