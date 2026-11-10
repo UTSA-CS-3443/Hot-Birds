@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -49,13 +50,23 @@ public class LoginController {
         boolean authenticated = userManager.login(emailField.getText(), passwordField.getText());
         passwordField.clear();
         if (authenticated) {
-            errorLabel.setText("");
+            //set current user
+            //Enter the home screen
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+
+                    HomeScreenController homeScreenController = fxmlLoader.getController();
+                    homeScreenController.setMainStage(mainStage);
+
+                    mainStage.setScene(scene);
+
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
         } else {
             errorLabel.setText("Email or password is incorrect.");
         }
-        //observationManager.setUser(user);
-
-
     }
 
     @FXML

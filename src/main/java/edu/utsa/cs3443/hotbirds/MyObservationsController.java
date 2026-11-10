@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -123,10 +124,59 @@ public class MyObservationsController {
         }
     }
 
-    //Show user profile when User button is clicked
+    //Switch to profile-screen
     @FXML
     void handleUser(ActionEvent event) {
-        ProfileController profileController = new ProfileController();
-        profileController.handleUser();
+
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/profile-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+
+            ProfileController profileController = fxmlLoader.getController();
+            profileController.setMainStage(mainStage);
+
+            mainStage.setScene(scene);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    //Switch to home screen
+    @FXML
+    void handleHomeScreen(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+
+            HomeScreenController homeScreenController = fxmlLoader.getController();
+            homeScreenController.setMainStage(mainStage);
+
+            mainStage.setScene(scene);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //Logout - Switch to login-screen
+    @FXML
+    void handleLogout(ActionEvent event){
+        //observationManager.setCurrentUser(null);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
+            Scene loginScene = new Scene(fxmlLoader.load());
+
+            // Get the controller and set the stage
+            LoginController loginController = fxmlLoader.getController();
+            loginController.setMainStage(mainStage);
+
+            mainStage.setScene(loginScene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

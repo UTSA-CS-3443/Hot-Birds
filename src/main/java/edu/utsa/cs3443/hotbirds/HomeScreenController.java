@@ -11,12 +11,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HomeScreenController {
-    //This class is only a skeleton right now, I'm still working on it -Makaila
 
     @FXML
     private Label contributions;
+    //Total amount of observations the user has contributed
+
     @FXML
     private Label totalCount;
+    //Total amount of observations completed by the community
 
     private Stage mainStage;
 
@@ -28,9 +30,7 @@ public class HomeScreenController {
     //Logout - Switch to login-screen
     @FXML
     void handleLogout(ActionEvent event){
-
         //observationManager.setCurrentUser(null);
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
             Scene loginScene = new Scene(fxmlLoader.load());
@@ -72,7 +72,7 @@ public class HomeScreenController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/profile-screen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
-            ProfileController profileController = new ProfileController();
+            ProfileController profileController = fxmlLoader.getController();
             profileController.setMainStage(mainStage);
 
             mainStage.setScene(scene);
