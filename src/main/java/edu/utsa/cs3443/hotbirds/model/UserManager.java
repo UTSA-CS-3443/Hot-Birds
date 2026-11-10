@@ -18,12 +18,13 @@ public class UserManager {
         private static final UserManager INSTANCE = createDefaultManager();
     }
 
-    private File usersFile = new File("data/users.csv");
+    private File usersFile;
+    //private File usersFile = new File("data/users.csv");
     private final List<User> users = new ArrayList<>();
     private String activeUser;
 
     public UserManager() {
-        //usersFile = defaultUsersFile().getAbsoluteFile();
+        usersFile = defaultUsersFile().getAbsoluteFile();
         try {
             loadUsers();
         } catch (IOException exception) {
