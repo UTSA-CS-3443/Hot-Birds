@@ -1,10 +1,10 @@
-package edu.utsa.cs3443.hotbirds.controllers;
+package edu.utsa.cs3443.hotbirds;
 
-import edu.utsa.cs3443.hotbirds.HotBirdsApplication;
 import edu.utsa.cs3443.hotbirds.model.Observation;
 import edu.utsa.cs3443.hotbirds.model.ObservationManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -24,6 +24,12 @@ public class MyObservationsController {
 
     private final ObservationManager manager = new ObservationManager();
     private final ObservableList<Observation> observations = FXCollections.observableArrayList();
+    private Stage mainStage;
+
+    @FXML
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
 
     // When my-observations.fxml loads: loads saved data and sets up the list
     @FXML
@@ -115,5 +121,12 @@ public class MyObservationsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //Show user profile when User button is clicked
+    @FXML
+    void handleUser(ActionEvent event) {
+        ProfileController profileController = new ProfileController();
+        profileController.handleUser();
     }
 }

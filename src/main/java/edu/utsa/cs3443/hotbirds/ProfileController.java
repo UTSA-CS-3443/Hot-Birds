@@ -1,9 +1,14 @@
-package edu.utsa.cs3443.hotbirds.controllers;
+package edu.utsa.cs3443.hotbirds;
 
 import edu.utsa.cs3443.hotbirds.model.User;
 import edu.utsa.cs3443.hotbirds.model.UserManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ProfileController {
     @FXML
@@ -14,6 +19,9 @@ public class ProfileController {
 
     @FXML
     private Label emailLabel;
+
+    @FXML
+    private Stage mainStage;
 
     private UserManager userManager = UserManager.shared();
 
@@ -31,6 +39,12 @@ public class ProfileController {
 
         String name = user.getName().isBlank() ? user.getUsername() : user.getName();
         setProfileValues(user.getUsername(), name, user.getEmail());
+    }
+
+    //Sets profile-screen to the stage
+    @FXML
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
     }
 
     @FXML
@@ -56,5 +70,22 @@ public class ProfileController {
         if (emailLabel != null) {
             emailLabel.setText(email);
         }
+    }
+
+    //TO DO: Fix this method so that we can call upon a screen navigation class to do our navigation for us and reduce redundant code
+    @FXML
+    void handleUser() {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/profile-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+
+            setMainStage(mainStage);
+            mainStage.setScene(scene);
+            mainStage.show();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 }

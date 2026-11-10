@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds.controllers;
+package edu.utsa.cs3443.hotbirds;
 
 import edu.utsa.cs3443.hotbirds.model.Observation;
 import javafx.fxml.FXML;
