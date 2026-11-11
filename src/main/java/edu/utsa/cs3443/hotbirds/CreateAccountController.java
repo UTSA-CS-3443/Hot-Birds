@@ -39,6 +39,7 @@ public class CreateAccountController {
 
     @FXML
     private void onCreateAccount() {
+        // Do not create or persist an account until all form fields pass validation.
         if (!isInputValid()) {
             return;
         }
@@ -48,6 +49,7 @@ public class CreateAccountController {
         try {
             if (userManager.createUser(user)) {
                 errorLabel.setText("Account created. You can now sign in.");
+                // Remove credentials from the form after successful account creation.
                 passwordField.clear();
                 confirmPasswordField.clear();
             } else {
@@ -70,6 +72,7 @@ public class CreateAccountController {
                 || confirmPasswordField == null || errorLabel == null) {
             throw new IllegalStateException("Create-account screen controls are not initialized");
         }
+        // Validate required values before checking format and matching passwords.
         if (usernameField.getText().isBlank() || emailField.getText().isBlank()
                 || passwordField.getText().isBlank()) {
             errorLabel.setText("Username, email, and password are required.");

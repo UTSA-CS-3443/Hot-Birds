@@ -41,20 +41,23 @@ public class ProfileController {
     public void initialize() {
         User user = userManager.findUser(userManager.getActiveUser());
         if (user == null) {
+            // The profile can be opened without an active session; keep the labels empty in that case.
             setProfileValues("", "", "");
             return;
         }
 
+        // Accounts without a saved full name display their username instead.
         String name = user.getName().isBlank() ? user.getUsername() : user.getName();
         setProfileValues(user.getUsername(), name, user.getEmail());
     }
 
     @FXML
     private void onLogOut(ActionEvent event) {
+        // Clear the session before navigating away from the profile.
         userManager.logout();
         setProfileValues("", "", "");
 
-        //Logout - Switch to login-screen
+        // Load the login screen and pass it the existing stage so navigation reuses the window.
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
             Scene loginScene = new Scene(fxmlLoader.load());
@@ -76,7 +79,7 @@ public class ProfileController {
             setProfileValues("", "", "");
         }
 
-        //Go back to home screen
+        // Return to the dashboard in the same window.
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());

@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserManager {
+    // Holder initialization provides a lazily created, thread-safe shared manager.
     private static final class SharedInstance {
         private static final UserManager INSTANCE = createDefaultManager();
     }
 
     private File usersFile;
-    //private File usersFile = new File("data/users.csv");
     private final List<User> users = new ArrayList<>();
     private String activeUser;
 
@@ -53,6 +53,7 @@ public class UserManager {
             updateUserFile();
             return true;
         } catch (IOException exception) {
+            // Keep memory consistent with disk if persistence fails.
             users.remove(user);
             throw exception;
         }
@@ -74,6 +75,7 @@ public class UserManager {
             updateUserFile();
             return true;
         } catch (IOException exception) {
+            // Restore both the account list and session if the file update fails.
             users.add(userIndex, user);
             activeUser = previousActiveUser;
             throw exception;
@@ -124,6 +126,7 @@ public class UserManager {
             Files.createDirectories(parent);
         }
 
+        // Write the complete account list first, then replace the destination to avoid partial files.
         Path temporaryFile = Files.createTempFile(parent, "users-", ".tmp");
         try {
             List<String> rows = users.stream().map(UserManager::serialize).toList();
@@ -132,6 +135,7 @@ public class UserManager {
                 Files.move(temporaryFile, destination, StandardCopyOption.REPLACE_EXISTING,
                         StandardCopyOption.ATOMIC_MOVE);
             } catch (AtomicMoveNotSupportedException exception) {
+                // Some filesystems cannot atomically move files; still replace the destination.
                 Files.move(temporaryFile, destination, StandardCopyOption.REPLACE_EXISTING);
             }
         } finally {
@@ -150,6 +154,7 @@ public class UserManager {
 
     private void loadUsers() throws IOException {
         Path path = usersFile.toPath();
+        // Build a complete replacement before changing the in-memory list, so malformed data is not partially loaded.
         List<User> loadedUsers = new ArrayList<>();
         if (Files.exists(path)) {
             int lineNumber = 0;
@@ -199,6 +204,7 @@ public class UserManager {
     }
 
     private static String serialize(User user) {
+        // Base64 keeps tabs/newlines in fields from breaking the tab-separated record structure.
         return encode(user.getUsername()) + "\t"
                 + encode(user.getFirstName()) + "\t"
                 + encode(user.getLastName()) + "\t"
@@ -215,6 +221,7 @@ public class UserManager {
     }
 
     private static File defaultUsersFile() {
+        // Keep account data in a per-user application directory rather than the project working directory.
         return Path.of(System.getProperty("user.home"), ".espi-hot-birds", "users.tsv").toFile();
     }
 

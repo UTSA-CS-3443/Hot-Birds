@@ -10,6 +10,7 @@ import java.util.Base64;
 import java.util.Objects;
 
 public class User {
+    // Store PBKDF2 hashes with the iteration count and per-password salt, not plaintext passwords.
     private static final String PASSWORD_PREFIX = "$pbkdf2-sha256$";
     private static final int PASSWORD_ITERATIONS = 210_000;
     private static final int SALT_LENGTH = 16;
@@ -144,6 +145,7 @@ public class User {
                 return false;
             }
             byte[] actualHash = derivePassword(candidate.toCharArray(), salt, iterations);
+            // Constant-time comparison avoids leaking hash-match information through timing.
             return MessageDigest.isEqual(expectedHash, actualHash);
         } catch (IllegalArgumentException exception) {
             return false;
@@ -153,6 +155,7 @@ public class User {
     private static String hashPassword(String password) {
         byte[] salt = new byte[SALT_LENGTH];
         SECURE_RANDOM.nextBytes(salt);
+        // A fresh random salt ensures identical passwords produce different stored hashes.
         byte[] hash = derivePassword(password.toCharArray(), salt, PASSWORD_ITERATIONS);
         return PASSWORD_PREFIX + PASSWORD_ITERATIONS + "$"
                 + Base64.getEncoder().encodeToString(salt) + "$"
@@ -186,6 +189,7 @@ public class User {
         } catch (GeneralSecurityException exception) {
             throw new IllegalStateException("Unable to securely process the password", exception);
         } finally {
+            // Clear sensitive password material from the key spec and temporary character array.
             spec.clearPassword();
             Arrays.fill(password, '\0');
         }

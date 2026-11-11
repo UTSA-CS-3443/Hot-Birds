@@ -47,23 +47,22 @@ public class LoginController {
         if (emailField == null || passwordField == null || errorLabel == null) {
             throw new IllegalStateException("Login screen controls are not initialized");
         }
+        // Clear the password immediately after authentication, whether the credentials match or not.
         boolean authenticated = userManager.login(emailField.getText(), passwordField.getText());
         passwordField.clear();
         if (authenticated) {
-            //set current user
-            //Enter the home screen
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
 
-                    HomeScreenController homeScreenController = fxmlLoader.getController();
-                    homeScreenController.setMainStage(mainStage);
+                HomeScreenController homeScreenController = fxmlLoader.getController();
+                homeScreenController.setMainStage(mainStage);
 
-                    mainStage.setScene(scene);
+                mainStage.setScene(scene);
 
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             errorLabel.setText("Email or password is incorrect.");
         }
