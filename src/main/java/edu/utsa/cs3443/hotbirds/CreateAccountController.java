@@ -3,9 +3,13 @@ package edu.utsa.cs3443.hotbirds;
 import edu.utsa.cs3443.hotbirds.model.User;
 import edu.utsa.cs3443.hotbirds.model.UserManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class CreateAccountController {
@@ -24,7 +28,12 @@ public class CreateAccountController {
     @FXML
     private Label errorLabel;
 
+    private Stage mainStage;
     private UserManager userManager = UserManager.shared();
+
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
 
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
@@ -47,24 +56,45 @@ public class CreateAccountController {
         User user = new User(usernameField.getText(), emailField.getText(),
                 passwordField.getText());
         try {
-            if (userManager.createUser(user)) {
-                errorLabel.setText("Account created. You can now sign in.");
-                // Remove credentials from the form after successful account creation.
-                passwordField.clear();
-                confirmPasswordField.clear();
-            } else {
+            if (!userManager.createUser(user)) {
                 errorLabel.setText("That username or email is already in use.");
+                return;
             }
         } catch (IOException exception) {
             errorLabel.setText("Unable to save the account: " + exception.getMessage());
+            return;
+        }
+
+        // Remove credentials from the form after successful account creation.
+        passwordField.clear();
+        confirmPasswordField.clear();
+        try {
+            showLoginScreen("Account created. You can now sign in.");
+        } catch (IOException exception) {
+            errorLabel.setText("Account created, but unable to return to sign in: "
+                    + exception.getMessage());
         }
     }
 
     @FXML
     private void onCancel() {
-        if (errorLabel != null) {
-            errorLabel.setText("");
+        try {
+            showLoginScreen("");
+        } catch (IOException exception) {
+            errorLabel.setText("Unable to return to sign in: " + exception.getMessage());
         }
+    }
+
+    private void showLoginScreen(String statusMessage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+
+        LoginController loginController = fxmlLoader.getController();
+        loginController.setMainStage(mainStage);
+        loginController.setUserManager(userManager);
+        loginController.setStatusMessage(statusMessage);
+
+        mainStage.setScene(scene);
     }
 
     private boolean isInputValid() {

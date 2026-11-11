@@ -1,6 +1,5 @@
 package edu.utsa.cs3443.hotbirds;
-
-import edu.utsa.cs3443.hotbirds.model.User;
+//test comment 11/11/26 - zaid
 import edu.utsa.cs3443.hotbirds.model.UserManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-//import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -70,8 +68,25 @@ public class LoginController {
 
     @FXML
     private void onCreateAccount() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/create-account-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+
+            CreateAccountController createAccountController = fxmlLoader.getController();
+            createAccountController.setMainStage(mainStage);
+            createAccountController.setUserManager(userManager);
+
+            mainStage.setScene(scene);
+        } catch (IOException e) {
+            if (errorLabel != null) {
+                errorLabel.setText("Unable to open the create-account screen: " + e.getMessage());
+            }
+        }
+    }
+
+    public void setStatusMessage(String message) {
         if (errorLabel != null) {
-            errorLabel.setText("Open the create-account screen to register.");
+            errorLabel.setText(message);
         }
     }
 }

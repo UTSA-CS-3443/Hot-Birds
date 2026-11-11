@@ -13,7 +13,7 @@ public class AddObservationController {
     @FXML private DatePicker datePicker;
     @FXML private TextField timeField, quantityField, locationField;
 
-    private Observation result;
+    //private Observation result;
 
     @FXML
     public void initialize() {
