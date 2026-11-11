@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+//TO DO: Check to make sure the screens are coming out at consistent sizes if their sizes are static
 public class HotBirdsApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {

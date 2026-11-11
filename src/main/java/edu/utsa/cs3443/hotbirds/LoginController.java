@@ -28,6 +28,7 @@ public class LoginController {
     }
 
     private Stage mainStage;
+    NavigationUtil navigator = new NavigationUtil();
 
 
     @FXML
@@ -49,18 +50,7 @@ public class LoginController {
         boolean authenticated = userManager.login(emailField.getText(), passwordField.getText());
         passwordField.clear();
         if (authenticated) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-
-                HomeScreenController homeScreenController = fxmlLoader.getController();
-                homeScreenController.setMainStage(mainStage);
-
-                mainStage.setScene(scene);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navigator.homeScreen(mainStage);
         } else {
             errorLabel.setText("Email or password is incorrect.");
         }

@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class HomeScreenController {
@@ -21,6 +22,7 @@ public class HomeScreenController {
     //Total amount of observations completed by the community
 
     private Stage mainStage;
+    NavigationUtil navigator = new NavigationUtil();
 
     @FXML
     public void setMainStage(Stage mainStage) {
@@ -28,44 +30,19 @@ public class HomeScreenController {
     }
 
     @FXML
-    void handleLogout(ActionEvent event) {
-        NavigationUtil navigator = new NavigationUtil();
+    private void handleLogout(ActionEvent event) {
         navigator.logout(mainStage);
     }
 
     //Switch to my-observations screen
     @FXML
-    void handleObservations(MouseEvent event) {
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/my-observations.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-
-            MyObservationsController observationsController = fxmlLoader.getController();
-            observationsController.setMainStage(mainStage);
-
-            mainStage.setScene(scene);
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+    private void handleObservations(MouseEvent event) {
+        navigator.myObservations(mainStage);
     }
 
-    //Switch to profile-screen
     @FXML
-    void handleUser(ActionEvent event) {
-
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/profile-screen.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-
-            ProfileController profileController = fxmlLoader.getController();
-            profileController.setMainStage(mainStage);
-
-            mainStage.setScene(scene);
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
+    private void handleUser(ActionEvent event) {
+        navigator.userProfile(mainStage);
     }
+
 }

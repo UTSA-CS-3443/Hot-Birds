@@ -30,6 +30,7 @@ public class CreateAccountController {
 
     private Stage mainStage;
     private UserManager userManager = UserManager.shared();
+    NavigationUtil navigator = new NavigationUtil();
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -85,6 +86,7 @@ public class CreateAccountController {
         }
     }
 
+    //TO DO: Is there some way we can move this screen logic to the Navigation util class? I don't want to mess up the welcome message
     private void showLoginScreen(String statusMessage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
