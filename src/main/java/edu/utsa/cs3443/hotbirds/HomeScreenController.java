@@ -27,24 +27,10 @@ public class HomeScreenController {
         this.mainStage = mainStage;
     }
 
-    //Logout - Switch to login-screen
     @FXML
-    void handleLogout(ActionEvent event){
-        //observationManager.setCurrentUser(null);
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
-            Scene loginScene = new Scene(fxmlLoader.load());
-
-            // Get the controller and set the stage
-            LoginController loginController = fxmlLoader.getController();
-            loginController.setMainStage(mainStage);
-
-            mainStage.setScene(loginScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    void handleLogout(ActionEvent event) {
+        NavigationUtil navigator = new NavigationUtil();
+        navigator.logout(mainStage);
     }
 
     //Switch to my-observations screen
