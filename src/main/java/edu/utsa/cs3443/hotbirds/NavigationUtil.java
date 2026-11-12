@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -91,14 +92,16 @@ public class NavigationUtil {
         }
     }
 
-    //Switch to Confirmation Observation screen
-    public void confirmationObservation(Stage stage) {
+    //Switch to Confirm Observation screen
+    public void confirmObservation(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/confirm-observation.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
             ConfirmObservationController observationController = fxmlLoader.getController();
             observationController.setMainStage(stage);
+            // TO DO: Figure out how to retrieve this value from user first
+            // observationController.setImageView(birdType);
 
             stage.setScene(scene);
 
@@ -139,6 +142,7 @@ public class NavigationUtil {
         }
     }
 
+
     public void addObservation(Stage stage, ListView<Observation> listView) {
         try {
             // Create a popup window that sits on top of the main window and blocks it until closed
@@ -169,8 +173,6 @@ public class NavigationUtil {
         }
     }
 
-
-
-    }
+}
 
 

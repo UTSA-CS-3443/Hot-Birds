@@ -81,42 +81,16 @@ public class MyObservationsController {
     // Runs when the New Observation button or nav item is clicked
     @FXML
     private void handleAdd() {
-        /*try {
-            // Create a popup window that sits on top of the main window and blocks it until closed
-            Stage dialog = new Stage();
-            dialog.initOwner(listView.getScene().getWindow());
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initStyle(StageStyle.TRANSPARENT); // No title bar and allows for rounded corners
-
-            // Load the popup layout and make its background transparent
-            FXMLLoader loader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/add-observation.fxml"));
-            Scene scene = new Scene(loader.load());
-            scene.setFill(Color.TRANSPARENT);
-
-            // Giving Stylesheet to the popup
-            scene.getStylesheets().add(HotBirdsApplication.class.getResource("styles/theme.css").toExternalForm());
-            dialog.setScene(scene);
-
-            // Centers the popup over the main window
-            Window owner = dialog.getOwner();
-            dialog.setOnShown(e -> {
-                dialog.setX(owner.getX() + (owner.getWidth() - dialog.getWidth()) / 2);
-                dialog.setY(owner.getY() + (owner.getHeight() - dialog.getHeight()) / 2);
-            });
-
-            dialog.showAndWait(); // Blocks interaction until popup is closed
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         navigator.addObservation(mainStage, listView);
-
     }
 
+    @FXML
     public void edit(Observation observation) {
         // open edit ui, then manager.updateObservation(observation) to save
         listView.refresh();
     }
 
+    @FXML
     private void delete(Observation observation) {
         try {
             if (manager.deleteObservation(observation)) { // removes it from the ArrayList and the file

@@ -12,8 +12,11 @@ public class AddObservationController {
     @FXML private ComboBox<String> speciesBox;
     @FXML private DatePicker datePicker;
     @FXML private TextField timeField, quantityField, locationField;
+    NavigationUtil navigator = new NavigationUtil();
+    private Stage mainStage;
 
     //private Observation result;
+    public void setMainStage(Stage mainStage) { this.mainStage = mainStage; }
 
     @FXML
     public void initialize() {
@@ -24,6 +27,9 @@ public class AddObservationController {
         ));
     }
 
+    //Save user data into variables when entered for us to go back to if they cancel
+    //Or to save to file if they confirm
+
     @FXML
     private void handleCancel() {
         ((Stage) speciesBox.getScene().getWindow()).close();
@@ -31,7 +37,8 @@ public class AddObservationController {
 
     @FXML
     private void handleNext() {
-        // add confirm logic later
-        //Upon next, switch to confirmation screen
+        //Proceed to confirm screen before adding to list of observations
+        //Pass speciesBox variable so confirmation screen knows which species to display
+        navigator.confirmObservation(mainStage);
     }
 }
