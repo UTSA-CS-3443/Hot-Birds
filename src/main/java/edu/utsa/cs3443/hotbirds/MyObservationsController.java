@@ -26,6 +26,7 @@ public class MyObservationsController {
     private final ObservationManager manager = new ObservationManager();
     private final ObservableList<Observation> observations = FXCollections.observableArrayList();
     private Stage mainStage;
+    NavigationUtil navigator = new NavigationUtil();
 
     @FXML
     public void setMainStage(Stage mainStage) {
@@ -80,7 +81,7 @@ public class MyObservationsController {
     // Runs when the New Observation button or nav item is clicked
     @FXML
     private void handleAdd() {
-        try {
+        /*try {
             // Create a popup window that sits on top of the main window and blocks it until closed
             Stage dialog = new Stage();
             dialog.initOwner(listView.getScene().getWindow());
@@ -106,7 +107,9 @@ public class MyObservationsController {
             dialog.showAndWait(); // Blocks interaction until popup is closed
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+        navigator.addObservation(mainStage, listView);
+
     }
 
     public void edit(Observation observation) {

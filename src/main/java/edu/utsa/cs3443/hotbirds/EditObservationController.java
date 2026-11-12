@@ -5,9 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class EditObservationController {
     //This class is only a skeleton right now, I'm still working on it -Makaila
+
+    private Stage mainStage;
 
     @FXML
     private DatePicker datePicker;
@@ -23,6 +26,11 @@ public class EditObservationController {
 
     @FXML
     private TextField timeField;
+
+    @FXML
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
 
     @FXML
     void handleCancel(ActionEvent event) {

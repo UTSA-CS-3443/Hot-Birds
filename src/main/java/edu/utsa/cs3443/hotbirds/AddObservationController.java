@@ -32,5 +32,6 @@ public class AddObservationController {
     @FXML
     private void handleNext() {
         // add confirm logic later
+        //Upon next, switch to confirmation screen
     }
 }
