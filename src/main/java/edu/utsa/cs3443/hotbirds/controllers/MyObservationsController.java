@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds;
+package edu.utsa.cs3443.hotbirds.controllers;
 
 import edu.utsa.cs3443.hotbirds.model.Observation;
 import edu.utsa.cs3443.hotbirds.model.ObservationManager;
@@ -57,7 +57,8 @@ public class MyObservationsController implements NavigationUtil.StageAware {
             // Runs once per cell: load the row layout a single time and reuse it
             {
                 try {
-                    FXMLLoader loader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/observation-row.fxml"));
+                    FXMLLoader loader = new FXMLLoader(MyObservationsController.class.getResource(
+                            "/edu/utsa/cs3443/hotbirds/layouts/observation-row.fxml"));
                     root = loader.load();
                     rowController = loader.getController();
                 } catch (IOException e) {

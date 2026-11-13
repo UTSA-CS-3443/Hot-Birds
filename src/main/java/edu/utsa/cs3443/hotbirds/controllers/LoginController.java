@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds;
+package edu.utsa.cs3443.hotbirds.controllers;
 //test comment 11/11/26 - zaid
 import edu.utsa.cs3443.hotbirds.model.UserManager;
 import edu.utsa.cs3443.hotbirds.util.NavigationUtil;

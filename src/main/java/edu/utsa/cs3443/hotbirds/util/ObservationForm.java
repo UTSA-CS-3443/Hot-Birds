@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds;
+package edu.utsa.cs3443.hotbirds.util;
 
 import edu.utsa.cs3443.hotbirds.model.Observation;
 
@@ -8,10 +8,11 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Shared form helpers for the Add and Edit screens, so both read and write the
- * observation fields the same way.
+ * observation fields the same way. It turns what a user types into a model
+ * Observation, so it is a helper rather than a screen or stored data.
  */
-final class ObservationForm {
-    static final DateTimeFormatter CSV_DATE = DateTimeFormatter.ofPattern("M/d/yyyy");
+public final class ObservationForm {
+    public static final DateTimeFormatter CSV_DATE = DateTimeFormatter.ofPattern("M/d/yyyy");
 
     private ObservationForm() { }
 
@@ -19,7 +20,7 @@ final class ObservationForm {
      * Builds an Observation from what's typed on a form.
      * Returns null if a field is empty, the quantity isn't a number, or the time is unreadable.
      */
-    static Observation build(String observer, String species, String quantityText,
+    public static Observation build(String observer, String species, String quantityText,
                              LocalDate date, String timeText, String location) {
         if (species == null || date == null || quantityText == null || timeText == null
                 || location == null || quantityText.isBlank() || timeText.isBlank()
@@ -55,7 +56,7 @@ final class ObservationForm {
     }
 
     // Reads a CSV date ("9/2/2026") back into something the DatePicker can show
-    static LocalDate parseDate(String date) {
+    public static LocalDate parseDate(String date) {
         try {
             return LocalDate.parse(date, CSV_DATE);
         } catch (DateTimeParseException e) {

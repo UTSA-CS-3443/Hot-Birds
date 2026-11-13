@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.AddObservationController">
+<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.AddObservationController">
     <VBox maxHeight="-Infinity" maxWidth="676.0" spacing="22.0" styleClass="dialog-card">
         <VBox spacing="4.0">
             <Label styleClass="dialog-title" text="Add Observation" />

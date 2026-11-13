@@ -1,8 +1,9 @@
-package edu.utsa.cs3443.hotbirds;
+package edu.utsa.cs3443.hotbirds.controllers;
 
 import edu.utsa.cs3443.hotbirds.model.Observation;
 import edu.utsa.cs3443.hotbirds.model.ObservationManager;
 import edu.utsa.cs3443.hotbirds.util.NavigationUtil;
+import edu.utsa.cs3443.hotbirds.util.ObservationForm;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

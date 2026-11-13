@@ -1,4 +1,4 @@
-package edu.utsa.cs3443.hotbirds;
+package edu.utsa.cs3443.hotbirds.controllers;
 
 import edu.utsa.cs3443.hotbirds.model.Observation;
 import edu.utsa.cs3443.hotbirds.model.ObservationManager;

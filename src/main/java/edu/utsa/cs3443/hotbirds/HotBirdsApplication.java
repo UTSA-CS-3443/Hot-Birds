@@ -1,8 +1,12 @@
 package edu.utsa.cs3443.hotbirds;
 
+import edu.utsa.cs3443.hotbirds.controllers.HomeScreenController;
+import edu.utsa.cs3443.hotbirds.controllers.LoginController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,6 +38,12 @@ public class HotBirdsApplication extends Application {
         HomeScreenController homeScreenController = fxmlLoader.getController();
         homeScreenController.setMainStage(stage);*/
         //----------------------------------------------------------------------------------------------------------//
+
+        // Adds App Icon
+        for (int size : new int[] {256, 128, 64, 48, 32, 16}) {
+            stage.getIcons().add(new Image(HotBirdsApplication.class
+                    .getResourceAsStream("images/icons/app-icon-" + size + ".png")));
+        }
 
         stage.setTitle("Hot Birds");
         stage.setScene(scene);
