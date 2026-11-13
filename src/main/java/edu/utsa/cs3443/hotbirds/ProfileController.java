@@ -2,17 +2,14 @@ package edu.utsa.cs3443.hotbirds;
 
 import edu.utsa.cs3443.hotbirds.model.User;
 import edu.utsa.cs3443.hotbirds.model.UserManager;
+import edu.utsa.cs3443.hotbirds.util.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-//import javafx.scene.input.MouseEvent;
+import javafx.stage.Window;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class ProfileController {
+public class ProfileController implements NavigationUtil.StageAware {
     @FXML
     private Label usernameLabel;
 
@@ -53,58 +50,29 @@ public class ProfileController {
 
     @FXML
     private void onLogOut(ActionEvent event) {
-        // Clear the session before navigating away from the profile.
         userManager.logout();
         setProfileValues("", "", "");
+        Window owner = mainStage.getOwner(); // Gets window that opened the profile popup.
+        if (owner instanceof Stage ownerStage) {
+            mainStage.close(); // Closes the profile popup.
 
-        // Load the login screen and pass it the existing stage so navigation reuses the window.
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
-            Scene loginScene = new Scene(fxmlLoader.load());
-
-            // Get the controller and set the stage
-            LoginController loginController = fxmlLoader.getController();
-            loginController.setMainStage(mainStage);
-
-            mainStage.setScene(loginScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Changes either dashboard or observation list page to login page.
+            NavigationUtil.switchScreen(ownerStage, "login-screen.fxml");
+        } else {
+            // if the owner stage isn't there it opens on the current page.
+            NavigationUtil.switchScreen(mainStage, "login-screen.fxml");
         }
     }
 
     @FXML
     private void onReturnToDashboard(ActionEvent event) {
-        if (userManager.getActiveUser() == null) {
-            setProfileValues("", "", "");
-        }
-
-        // Return to the dashboard in the same window.
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/home-screen.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-
-            HomeScreenController homeScreenController = fxmlLoader.getController();
-            homeScreenController.setMainStage(mainStage);
-
-            mainStage.setScene(scene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        mainStage.close();
     }
 
     private void setProfileValues(String username, String fullName, String email) {
-        if (usernameLabel != null) {
-            usernameLabel.setText(username);
-        }
-        if (fullNameLabel != null) {
-            fullNameLabel.setText(fullName);
-        }
-        if (emailLabel != null) {
-            emailLabel.setText(email);
-        }
+        if (usernameLabel != null) usernameLabel.setText(username);
+        if (fullNameLabel != null) fullNameLabel.setText(fullName);
+        if (emailLabel != null) emailLabel.setText(email);
     }
 
 }

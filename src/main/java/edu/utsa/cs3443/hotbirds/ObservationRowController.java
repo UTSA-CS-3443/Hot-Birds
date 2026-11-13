@@ -17,18 +17,14 @@ public class ObservationRowController {
             "Eastern Bluebird",       "#B8D4F0",
             "Painted Bunting",        "#F2B8C0",
             "Spotted Towhee",         "#E8C3A0",
-            "Red-breasted Nuthatch",  "#F0C9A8",
-            "Great Blue Heron",       "#C5D3DE",
-            "Red-bellied Woodpecker", "#EBC9C5"
+            "Red-breasted Nuthatch",  "#F0C9A8"
     );
     private static final java.util.Map<String, String> ICON_COLORS = java.util.Map.of(
             "American Goldfinch",     "#8A6D00",
             "Eastern Bluebird",       "#1F4E8C",
             "Painted Bunting",        "#9E1B30",
             "Spotted Towhee",         "#8A4310",
-            "Red-breasted Nuthatch",  "#9A5420",
-            "Great Blue Heron",       "#3A5670",
-            "Red-bellied Woodpecker", "#8C2B20"
+            "Red-breasted Nuthatch",  "#9A5420"
     );
 
     private Observation item;

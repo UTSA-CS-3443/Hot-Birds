@@ -43,6 +43,8 @@
             <TextField fx:id="locationField" promptText="Address or park name" styleClass="input-field" />
         </VBox>
 
+        <Label fx:id="errorLabel" styleClass="subtext" wrapText="true" />
+
         <HBox alignment="CENTER_RIGHT" spacing="12.0">
             <Button onAction="#handleCancel" prefHeight="40.0" prefWidth="79.0" styleClass="edit-button" text="Cancel" />
             <Button onAction="#handleNext" styleClass="next-button" text="Next" />

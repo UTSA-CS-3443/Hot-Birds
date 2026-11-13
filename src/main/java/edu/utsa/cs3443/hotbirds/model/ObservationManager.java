@@ -11,6 +11,9 @@ import java.util.List;
 public class ObservationManager {
     private static final String HEADER = "User,Species,Quantity,Time,AM or PM,Date,Location,Location Nickname";
 
+    // One shared manager for the whole app, so every screen sees the same data
+    private static ObservationManager shared;
+
     private final ArrayList<Observation> observationArrayList = new ArrayList<>();
     private final Path filePath;
 
@@ -20,6 +23,22 @@ public class ObservationManager {
 
     public ObservationManager(String filePath) {
         this.filePath = Path.of(filePath);
+    }
+
+    /**
+     * The one manager the screens share. Loads the CSV the first time it is called,
+     * so every screen reads the same list instead of its own copy.
+     */
+    public static ObservationManager shared() {
+        if (shared == null) {
+            shared = new ObservationManager();
+            try {
+                shared.loadObservations();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return shared;
     }
 
     public void addObservation(Observation observation) {
@@ -125,6 +144,91 @@ public class ObservationManager {
                 csv(o.getObserver()), csv(o.getSpecies()), String.valueOf(o.getCount()),
                 csv(o.getTime()), csv(o.getAmPm()), csv(o.getDate()),
                 csv(o.getAddress()), csv(o.getLocation()));
+    }
+
+    // Adds the observation and writes the whole list back to the CSV
+    public boolean saveNewObservation(Observation observation) throws IOException {
+        observationArrayList.add(observation);
+        try {
+            saveDataToFile();
+            return true;
+        } catch (IOException e) {
+            observationArrayList.remove(observation); // undo if the file write failed
+            throw e;
+        }
+    }
+
+    // Only the observations logged by this user (what My Observations shows)
+    public ArrayList<Observation> getObservationsFor(String username) {
+        ArrayList<Observation> mine = new ArrayList<>();
+        if (username == null) {
+            return mine;
+        }
+        for (Observation o : observationArrayList) {
+            if (o.getObserver().equalsIgnoreCase(username.trim())) {
+                mine.add(o);
+            }
+        }
+        return mine;
+    }
+
+    // How many records this user logged
+    public int getRecordCountFor(String username) {
+        return getObservationsFor(username).size();
+    }
+
+    // How many records are in the whole file, from every user
+    public int getTotalRecordCount() {
+        return observationArrayList.size();
+    }
+
+    // Every bird counted by everyone (quantities added up, not rows)
+    public int getTotalBirdsCounted() {
+        int total = 0;
+        for (Observation o : observationArrayList) {
+            total += o.getCount();
+        }
+        return total;
+    }
+
+     //Adds up how many birds of each species everyone has logged, biggest total first.
+     //The dashboard's "Species to Watch For" card reads the first five.
+    public java.util.LinkedHashMap<String, Integer> getBirdsBySpecies() {
+
+        // Step 1: add up the quantities, one running total per species.
+        // The key is the species name, the value is the birds counted so far.
+        java.util.HashMap<String, Integer> totals = new java.util.HashMap<>();
+        for (Observation o : observationArrayList) {
+
+            // merge() means: if this species isn't in the map yet, put its count in;
+            // if it is, combine the old value and the new one with Integer::sum (old + new).
+            totals.merge(o.getSpecies(), o.getCount(), Integer::sum);
+        }
+
+        // Step 2: put the species names in order, biggest total first.
+        java.util.List<String> names = new ArrayList<>(totals.keySet());
+
+        // The comparator returns a negative number when x should come before y.
+        // Subtracting y's total from x's puts the BIGGER total first (descending).
+        names.sort((x, y) -> totals.get(y) - totals.get(x));
+
+        // Step 3: copy into a LinkedHashMap, which keeps the order things were added.
+        java.util.LinkedHashMap<String, Integer> sorted = new java.util.LinkedHashMap<>();
+        for (String name : names) {
+            sorted.put(name, totals.get(name));
+        }
+        return sorted;
+    }
+
+    // How many separate sightings were logged for one species
+    public int getSightingCountFor(String species) {
+        int count = 0;
+        for (Observation o : observationArrayList) {
+            if (o.getSpecies().equals(species)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public ArrayList<Observation> getObservationArrayList() {

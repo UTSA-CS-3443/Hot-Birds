@@ -12,26 +12,27 @@ public class HotBirdsApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        //Start at the Login screen here (True starting point)
+        //Start at the Login screen (True starting point)
+        //The screens show the signed-in user's name and records, so the app has to start here
         //----------------------------------------------------------------------------------------------------------//
-        /*FXMLLoader fxmlLoader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/login-screen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/login-screen.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 1024, 768);
 
         LoginController loginController = fxmlLoader.getController();
-        loginController.setMainStage(stage);*/
+        loginController.setMainStage(stage);
+        //PASSES the current stage TO the controller through its setMainStage method
         //----------------------------------------------------------------------------------------------------------//
 
 
-        //Start at the home screen - FOR TESTING
+        //Start at the home screen - FOR TESTING (no user is signed in, so counts show 0)
         //----------------------------------------------------------------------------------------------------------//
-        FXMLLoader fxmlLoader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/home-screen.fxml"));
+        /*FXMLLoader fxmlLoader = new FXMLLoader(HotBirdsApplication.class.getResource("layouts/home-screen.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 1024, 768);
 
         HomeScreenController homeScreenController = fxmlLoader.getController();
-        homeScreenController.setMainStage(stage);
-        //PASSES the current stage TO the HomeScreenController through the setMainStage method within HomeScreenController
+        homeScreenController.setMainStage(stage);*/
         //----------------------------------------------------------------------------------------------------------//
 
         stage.setTitle("Hot Birds");

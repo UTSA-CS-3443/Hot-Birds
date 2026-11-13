@@ -1,4 +1,6 @@
 Username,First name,Last name,Email Address,Password
-greyduckling,Maya,Rodriguez,maya.rodriguez555@gmail.com,password12345!
-redsparrow,Felicia,Monroe,felicia.monroe7777@gmail.com,whatsupplayerss!@#
-yellowchickadee,Sam,Monitor,samuel.monitoration@gmail.com,rest.to.five.stepdown5
+greyduckling,Maya,Rodriguez,maya.rodriguez555@gmail.com,$pbkdf2-sha256$210000$4346wCij7V6k1idLUs7/Yw==$GmMX5bWJL/y8OeEzE5T8fRjX8m1YnMVAFpMWprrpfJE=
+redsparrow,Felicia,Monroe,felicia.monroe7777@gmail.com,$pbkdf2-sha256$210000$sK2IGXc9YV+44hJQwRio+A==$nkWNDlqx/GDP0thQJginkr7q6t23pitkrsT1AEA/5g0=
+yellowchickadee,Sam,Monitor,samuel.monitoration@gmail.com,$pbkdf2-sha256$210000$zjhS21qXKg3vb48LlZYbrQ==$MTv+2xHSh8HJucLmJH3qTzPKltN8Z965c0fJIuZmw+I=
+user2,Jacob,Martinez,jam@gmail.com,$pbkdf2-sha256$210000$JaHfLCG8ikTTAsXJubplig==$N2ntugpPtFETCRHsKYBQmkIudaDkzuNucQz2xJGAEdU=
+john,john,doe,john@gmail.com,$pbkdf2-sha256$210000$7KC6SEaENs6X9SHwikHplQ==$LWlGBybeZscQJl4D0ZHneJ8VcUmTkcWO3EY0h8BEiLs=

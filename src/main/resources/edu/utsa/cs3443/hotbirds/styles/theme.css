@@ -133,6 +133,22 @@
 .nav-bubble-selected:hover {
     -fx-background-color: rgba(255, 255, 255, 0.08);
 }
+/* A Button that looks like the nav bubbles (used for Log out at the bottom of the sidebar),
+   with its text centred since it has no icon. */
+.nav-bubble-button {
+    -fx-background-color: #FFFFFF08;
+    -fx-background-radius: 12px;
+    -fx-padding: 12px;
+    -fx-alignment: center;
+    -fx-text-fill: #D6E1D8;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.nav-bubble-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+}
+
 
 .nav-bubble-selected .label {
     -fx-text-fill: #FFFFFF;
@@ -327,4 +343,21 @@
 
 .combo-box-popup > .list-view .list-cell:filled:selected {
     -fx-background-color: #E3E8E5;
+}
+
+
+/* Dashboard bars: JavaFX insets the coloured fill a few pixels inside the track by
+   default, which leaves a gap at the ends. Zeroing the insets makes it fill the track. */
+.species-bar > .track {
+    -fx-background-color: #FFFFFF;   /* plain white, no gradient or inner shadow */
+    -fx-background-insets: 0;
+    -fx-background-radius: 7px;
+    -fx-padding: 0;
+    -fx-effect: null;
+}
+
+.species-bar > .bar {
+    -fx-background-insets: 0;
+    -fx-background-radius: 7px;
+    -fx-padding: 0;
 }

@@ -2,9 +2,8 @@ package edu.utsa.cs3443.hotbirds;
 
 import edu.utsa.cs3443.hotbirds.model.User;
 import edu.utsa.cs3443.hotbirds.model.UserManager;
+import edu.utsa.cs3443.hotbirds.util.NavigationUtil;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,7 +11,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CreateAccountController {
+public class CreateAccountController implements NavigationUtil.StageAware {
+    @FXML
+    private TextField firstNameField;
+
+    @FXML
+    private TextField lastNameField;
+
     @FXML
     private TextField usernameField;
 
@@ -30,7 +35,6 @@ public class CreateAccountController {
 
     private Stage mainStage;
     private UserManager userManager = UserManager.shared();
-    NavigationUtil navigator = new NavigationUtil();
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -54,8 +58,8 @@ public class CreateAccountController {
             return;
         }
 
-        User user = new User(usernameField.getText(), emailField.getText(),
-                passwordField.getText());
+        User user = new User(firstNameField.getText(), lastNameField.getText(),
+                usernameField.getText(), passwordField.getText(), emailField.getText());
         try {
             if (!userManager.createUser(user)) {
                 errorLabel.setText("That username or email is already in use.");
@@ -69,45 +73,36 @@ public class CreateAccountController {
         // Remove credentials from the form after successful account creation.
         passwordField.clear();
         confirmPasswordField.clear();
-        try {
-            showLoginScreen("Account created. You can now sign in.");
-        } catch (IOException exception) {
-            errorLabel.setText("Account created, but unable to return to sign in: "
-                    + exception.getMessage());
-        }
+        showLoginScreen("Account created. You can now sign in.");
     }
 
     @FXML
     private void onCancel() {
-        try {
-            showLoginScreen("");
-        } catch (IOException exception) {
-            errorLabel.setText("Unable to return to sign in: " + exception.getMessage());
+        showLoginScreen("");
+    }
+
+    // Returns to the login screen and shows a message there (e.g. the welcome message)
+    private void showLoginScreen(String statusMessage) {
+        LoginController loginController = NavigationUtil.switchScreen(mainStage, "login-screen.fxml");
+        if (loginController != null) {
+            loginController.setUserManager(userManager);
+            loginController.setStatusMessage(statusMessage);
+        } else {
+            errorLabel.setText("Unable to return to sign in.");
         }
     }
 
-    //TO DO: Is there some way we can move this screen logic to the Navigation util class? I don't want to mess up the welcome message
-    private void showLoginScreen(String statusMessage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/login-screen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-
-        LoginController loginController = fxmlLoader.getController();
-        loginController.setMainStage(mainStage);
-        loginController.setUserManager(userManager);
-        loginController.setStatusMessage(statusMessage);
-
-        mainStage.setScene(scene);
-    }
-
     private boolean isInputValid() {
-        if (usernameField == null || emailField == null || passwordField == null
+        if (firstNameField == null || lastNameField == null || usernameField == null
+                || emailField == null || passwordField == null
                 || confirmPasswordField == null || errorLabel == null) {
             throw new IllegalStateException("Create-account screen controls are not initialized");
         }
         // Validate required values before checking format and matching passwords.
-        if (usernameField.getText().isBlank() || emailField.getText().isBlank()
+        if (firstNameField.getText().isBlank() || lastNameField.getText().isBlank()
+                || usernameField.getText().isBlank() || emailField.getText().isBlank()
                 || passwordField.getText().isBlank()) {
-            errorLabel.setText("Username, email, and password are required.");
+            errorLabel.setText("Name, username, email, and password are required.");
             return false;
         }
         if (!emailField.getText().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
@@ -120,4 +115,5 @@ public class CreateAccountController {
         }
         return true;
     }
+
 }

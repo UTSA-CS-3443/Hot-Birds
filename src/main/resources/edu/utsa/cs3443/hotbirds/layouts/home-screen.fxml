@@ -59,7 +59,7 @@
                             <children>
                                 <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/icons/house-white.png" />
+                                        <Image url="@../images/icons/house-orange.png" />
                                     </image>
                                     <HBox.margin>
                                         <Insets right="6.0" />
@@ -78,27 +78,37 @@
                             <children>
                                 <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/icons/notebook-tabs-orange.png" />
+                                        <Image url="@../images/icons/notebook-white.png" />
                                     </image>
                                     <HBox.margin>
                                         <Insets right="6.0" />
                                     </HBox.margin>
+                           <effect>
+                              <ColorAdjust brightness="0.48" />
+                           </effect>
                                 </ImageView>
                                 <Label styleClass="nav-location-text" text="My Observations" />
                             </children>
                         </HBox>
-                  <Pane prefHeight="531.0" prefWidth="188.0" />
-                  <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" prefHeight="32.0" prefWidth="95.0" styleClass="profile-button" text="Logout">
-                     <padding>
-                        <Insets right="-4.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
+                        <HBox onMouseClicked="#handleAdd" prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                           <children>
+                              <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/plus-circle.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="6.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Label styleClass="nav-location-text" text="New Observation" />
+                           </children>
+                        </HBox>
+                  <Pane prefHeight="469.0" prefWidth="188.0" />
+                  <!-- Styled like the nav items above, but pinned to the bottom by the spacer -->
+                  <Button alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" prefHeight="43.0" prefWidth="188.0" styleClass="nav-bubble-button" text="Log out" />
                     </children>
                 </VBox>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="804.0" HBox.hgrow="ALWAYS">
@@ -108,18 +118,21 @@
                                 <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
                             </padding>
                             <children>
-                                <VBox alignment="BOTTOM_LEFT" prefHeight="43.0" prefWidth="355.0">
+                                <VBox alignment="BOTTOM_LEFT" prefHeight="46.0" prefWidth="355.0">
                                     <children>
-                                        <Label prefHeight="29.0" prefWidth="334.0" styleClass="page-title" text="Dashboard">
-                                 <VBox.margin>
-                                    <Insets left="20.0" />
-                                 </VBox.margin></Label>
+                                        <!-- Small caption line, so the title sits at the same height as on My Observations -->
+                                        <Label styleClass="page-subtitle" text="COMMUNITY OVERVIEW">
+                                            <font>
+                                                <Font size="10.0" />
+                                            </font>
+                                        </Label>
+                                        <Label prefHeight="39.0" prefWidth="334.0" styleClass="page-title" text="Dashboard" />
                                     </children>
                                 </VBox>
-                        <Pane prefHeight="43.0" prefWidth="286.0" />
-                                <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleUser" prefHeight="32.0" prefWidth="95.0" styleClass="profile-button" text="Name">
+                        <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="profileButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleUser" prefHeight="32.0" prefWidth="95.0" styleClass="profile-button" text="Name">
                                     <graphic>
-                                        <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="new-observation-button">
+                                        <ImageView fitHeight="19.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../images/icons/chevron-right.png" />
                                             </image>
@@ -133,299 +146,257 @@
                                     </padding>
                                 </Button>
                             </children></HBox>
-                  <VBox prefHeight="644.0" prefWidth="724.0">
+                  <VBox prefHeight="651.0" prefWidth="764.0">
                      <VBox.margin>
-                        <Insets left="40.0" right="40.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </VBox.margin>
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 12;" styleClass="dark-green">
+                        <!-- Two stat tiles, each taking half the width -->
+                        <HBox prefHeight="150.0" prefWidth="764.0" spacing="20.0" style="-fx-background-radius: 12;" styleClass="dark-green">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                            <children>
-                              <Label text="This year's findings" textFill="#ffad80">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="25.0" top="10.0" />
-                                 </VBox.margin></Label>
-                              <Label prefHeight="57.0" prefWidth="681.0" text="Recent data show the American Goldfinch could lose about 65% of its breeding-season habitat if global warming continues at its current pace." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <HBox prefHeight="85.0" prefWidth="724.0">
+                              <VBox alignment="CENTER_LEFT" spacing="2.0" style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets bottom="18.0" left="22.0" right="22.0" top="18.0" />
+                                 </padding>
                                  <children>
-                                    <VBox prefHeight="95.0" prefWidth="300.0" style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12;">
-                                       <HBox.margin>
-                                          <Insets left="50.0" />
-                                       </HBox.margin>
-                                       <children>
-                                          <Label text="Total birds counted" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="15.0" top="10.0" />
-                                             </VBox.margin></Label>
-                                          <Label fx:id="totalCount" text="1,470" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="28.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label text="14% more than last year" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin></Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="91.0" prefWidth="300.0" style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12;">
-                                       <children>
-                                          <Label text="You've contributed" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="15.0" top="10.0" />
-                                             </VBox.margin></Label>
-                                          <Label fx:id="contributions" text="20" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="28.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label text="sightings, thank you!" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin></Label>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets left="20.0" />
-                                       </HBox.margin>
-                                    </VBox>
+                                    <Label text="Total birds counted" textFill="#A9BBB4">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="totalCount" text="0" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="totalCaption" text="across all members" textFill="#A9BBB4">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </HBox>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" spacing="2.0" style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets bottom="18.0" left="22.0" right="22.0" top="18.0" />
+                                 </padding>
+                                 <children>
+                                    <Label text="You've contributed" textFill="#A9BBB4">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="contributions" text="0" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="sightings!" textFill="#A9BBB4">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
+                        </HBox>
+                        <VBox prefHeight="481.0" prefWidth="764.0" style="-fx-background-radius: 12;" styleClass="white">
                            <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin></VBox>
-                        <VBox prefHeight="389.0" prefWidth="724.0" style="-fx-background-radius: 12;" styleClass="white">
-                           <VBox.margin>
-                              <Insets top="30.0" />
+                              <Insets top="20.0" />
                            </VBox.margin>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
                            <children>
-                              <VBox prefHeight="42.0" prefWidth="664.0">
+                              <VBox prefHeight="26.0" prefWidth="664.0">
                                  <children>
                                     <Label styleClass="heading" text="Species to Watch For">
                                        <VBox.margin>
                                           <Insets bottom="5.0" top="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label styleClass="page-subtitle" text="Community Sightings - Y2026" />
                                  </children>
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" top="15.0" />
                                  </VBox.margin>
                               </VBox>
-                              <VBox prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background">
+                              <!-- Row 1: filled in by HomeScreenController from the observation data -->
+                              <VBox fx:id="speciesRow1" alignment="CENTER_LEFT" minHeight="51.0" prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" top="10.0" />
                                  </VBox.margin>
                                  <children>
-                                    <HBox prefHeight="20.0" prefWidth="693.0">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="693.0">
                                        <children>
-                                          <Label prefHeight="18.0" prefWidth="110.0" styleClass="subheading" text="Painted Bunting">
+                                          <Label fx:id="speciesName1" prefWidth="195.0" styleClass="subheading" text="Species">
                                              <HBox.margin>
-                                                <Insets left="12.0" right="15.0" top="8.0" />
-                                             </HBox.margin></Label>
-                                          <Label prefHeight="17.0" prefWidth="84.0" style="-fx-background-color: #C8E6C9;" text="Least Concern" textFill="#388e3c">
-                                             <HBox.margin>
-                                                <Insets top="8.0" />
+                                                <Insets left="12.0" right="12.0" top="8.0" />
                                              </HBox.margin>
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font></Label>
-                                          <Label text="+183 compared to last year" textFill="#388e3c">
+                                          </Label>
+                                          <!-- Pushes the count to the right edge, whatever the name and badge are -->
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="speciesStat1" alignment="CENTER_RIGHT" prefWidth="215.0" text="0 birds" textFill="#388e3c">
                                              <font>
                                                 <Font name="System Bold" size="13.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="290.0" top="8.0" />
+                                                <Insets right="12.0" top="8.0" />
                                              </HBox.margin>
+                                             <padding>
+                                                <Insets right="2.0" />
+                                             </padding>
                                           </Label>
                                        </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
                                     </HBox>
-                                    <ProgressBar opacity="0.73" prefHeight="13.0" prefWidth="670.0" progress="0.597" style="-fx-accent: #388e3c; -fx-control-inner-background: #FFFFFF;">
+                                    <ProgressBar fx:id="speciesBar1" maxWidth="Infinity" prefHeight="20.0" prefWidth="709.0" progress="0.0" style="-fx-accent: #17352D; -fx-control-inner-background: #FFFFFF;" styleClass="species-bar">
                                        <VBox.margin>
-                                          <Insets left="10.0" top="5.0" />
-                                       </VBox.margin></ProgressBar>
-                                 </children>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="79.0" prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background">
-                                 <children>
-                                    <HBox prefHeight="20.0" prefWidth="693.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="115.0" styleClass="subheading" text="Spotted Towhee">
-                                             <HBox.margin>
-                                                <Insets left="12.0" right="15.0" top="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label prefHeight="17.0" prefWidth="183.0" style="-fx-background-color: ffd6d6;" text="Moderately Climate Vulnerable" textFill="#b73131">
-                                             <HBox.margin>
-                                                <Insets top="8.0" />
-                                             </HBox.margin>
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="- 27 compared to last year" textFill="#b73131">
-                                             <font>
-                                                <Font name="System Bold" size="13.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="190.0" top="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <ProgressBar opacity="0.73" prefHeight="13.0" prefWidth="670.0" progress="0.029" style="-fx-accent: #D32F2F; -fx-control-inner-background: #FFFFFF;">
-                                       <VBox.margin>
-                                          <Insets left="10.0" top="5.0" />
+                                          <Insets bottom="8.0" left="12.0" right="12.0" top="10.0" />
                                        </VBox.margin>
                                     </ProgressBar>
                                  </children>
+                              </VBox>
+                              <!-- Row 2: filled in by HomeScreenController from the observation data -->
+                              <VBox fx:id="speciesRow2" alignment="CENTER_LEFT" minHeight="51.0" prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" top="10.0" />
                                  </VBox.margin>
-                              </VBox>
-                              <VBox prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background">
                                  <children>
-                                    <HBox prefHeight="20.0" prefWidth="693.0">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="693.0">
                                        <children>
-                                          <Label prefHeight="18.0" prefWidth="135.0" styleClass="subheading" text="American Goldfinch">
+                                          <Label fx:id="speciesName2" prefWidth="195.0" styleClass="subheading" text="Species">
                                              <HBox.margin>
-                                                <Insets left="12.0" right="15.0" top="8.0" />
+                                                <Insets left="12.0" right="12.0" top="8.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <Label prefHeight="17.0" prefWidth="84.0" style="-fx-background-color: #C8E6C9;" text="Least Concern" textFill="#388e3c">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets top="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label prefHeight="19.0" prefWidth="171.0" text="+216 compared to last year" textFill="#388e3c">
+                                          <!-- Pushes the count to the right edge, whatever the name and badge are -->
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="speciesStat2" alignment="CENTER_RIGHT" prefWidth="215.0" text="0 birds" textFill="#388e3c">
                                              <font>
                                                 <Font name="System Bold" size="13.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="265.0" top="8.0" />
+                                                <Insets right="12.0" top="8.0" />
                                              </HBox.margin>
+                                             <padding>
+                                                <Insets right="2.0" />
+                                             </padding>
                                           </Label>
                                        </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
                                     </HBox>
-                                    <ProgressBar opacity="0.73" prefHeight="13.0" prefWidth="670.0" progress="0.278" style="-fx-accent: #388e3c; -fx-control-inner-background: #FFFFFF;">
+                                    <ProgressBar fx:id="speciesBar2" maxWidth="Infinity" prefHeight="20.0" progress="0.0" style="-fx-accent: #17352D; -fx-control-inner-background: #FFFFFF;" styleClass="species-bar">
                                        <VBox.margin>
-                                          <Insets left="10.0" top="5.0" />
+                                          <Insets bottom="8.0" left="12.0" right="12.0" top="10.0" />
                                        </VBox.margin>
                                     </ProgressBar>
                                  </children>
+                              </VBox>
+                              <!-- Row 3: filled in by HomeScreenController from the observation data -->
+                              <VBox fx:id="speciesRow3" alignment="CENTER_LEFT" minHeight="51.0" prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" top="10.0" />
                                  </VBox.margin>
-                              </VBox>
-                              <VBox prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background">
                                  <children>
-                                    <HBox prefHeight="20.0" prefWidth="693.0">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="693.0">
                                        <children>
-                                          <Label prefHeight="18.0" prefWidth="158.0" styleClass="subheading" text="Red-breasted Nuthatch">
+                                          <Label fx:id="speciesName3" prefWidth="195.0" styleClass="subheading" text="Species">
                                              <HBox.margin>
-                                                <Insets left="12.0" right="15.0" top="8.0" />
+                                                <Insets left="12.0" right="12.0" top="8.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <Label prefHeight="17.0" prefWidth="180.0" style="-fx-background-color: ffd6d6;" text="Moderately Climate Vulnerable" textFill="#b73131">
-                                             <HBox.margin>
-                                                <Insets top="8.0" />
-                                             </HBox.margin>
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="- 1 compared to last year" textFill="#b73131">
+                                          <!-- Pushes the count to the right edge, whatever the name and badge are -->
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="speciesStat3" alignment="CENTER_RIGHT" prefWidth="215.0" text="0 birds" textFill="#388e3c">
                                              <font>
                                                 <Font name="System Bold" size="13.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="160.0" top="8.0" />
+                                                <Insets right="12.0" top="8.0" />
                                              </HBox.margin>
+                                             <padding>
+                                                <Insets right="2.0" />
+                                             </padding>
                                           </Label>
                                        </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
                                     </HBox>
-                                    <ProgressBar opacity="0.73" prefHeight="13.0" prefWidth="670.0" progress="0.015" style="-fx-accent: #D32F2F; -fx-control-inner-background: #FFFFFF;">
+                                    <ProgressBar fx:id="speciesBar3" maxWidth="Infinity" prefHeight="20.0" progress="0.0" style="-fx-accent: #17352D; -fx-control-inner-background: #FFFFFF;" styleClass="species-bar">
                                        <VBox.margin>
-                                          <Insets left="10.0" top="5.0" />
+                                          <Insets bottom="8.0" left="12.0" right="12.0" top="10.0" />
                                        </VBox.margin>
                                     </ProgressBar>
                                  </children>
+                              </VBox>
+                              <!-- Row 4: filled in by HomeScreenController from the observation data -->
+                              <VBox fx:id="speciesRow4" alignment="CENTER_LEFT" minHeight="51.0" prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" top="10.0" />
                                  </VBox.margin>
-                              </VBox>
-                              <VBox prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background">
                                  <children>
-                                    <HBox prefHeight="20.0" prefWidth="693.0">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="693.0">
                                        <children>
-                                          <Label prefHeight="18.0" prefWidth="115.0" styleClass="subheading" text="Eastern Bluebird">
+                                          <Label fx:id="speciesName4" prefWidth="195.0" styleClass="subheading" text="Species">
                                              <HBox.margin>
-                                                <Insets left="12.0" right="15.0" top="8.0" />
+                                                <Insets left="12.0" right="12.0" top="8.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <Label prefHeight="17.0" prefWidth="84.0" style="-fx-background-color: #C8E6C9;" text="Least Concern" textFill="#388e3c">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets top="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label text="+138 compared to last year" textFill="#388e3c">
+                                          <!-- Pushes the count to the right edge, whatever the name and badge are -->
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="speciesStat4" alignment="CENTER_RIGHT" prefWidth="215.0" text="0 birds" textFill="#388e3c">
                                              <font>
                                                 <Font name="System Bold" size="13.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="285.0" top="8.0" />
+                                                <Insets right="12.0" top="8.0" />
                                              </HBox.margin>
+                                             <padding>
+                                                <Insets right="2.0" />
+                                             </padding>
                                           </Label>
                                        </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
                                     </HBox>
-                                    <ProgressBar opacity="0.73" prefHeight="13.0" prefWidth="670.0" progress="0.564" style="-fx-accent: #388e3c; -fx-control-inner-background: #FFFFFF;">
+                                    <ProgressBar fx:id="speciesBar4" maxWidth="Infinity" prefHeight="20.0" progress="0.0" style="-fx-accent: #17352D; -fx-control-inner-background: #FFFFFF;" styleClass="species-bar">
                                        <VBox.margin>
-                                          <Insets left="10.0" top="5.0" />
+                                          <Insets bottom="8.0" left="12.0" right="12.0" top="10.0" />
                                        </VBox.margin>
                                     </ProgressBar>
                                  </children>
+                              </VBox>
+                              <!-- Row 5: filled in by HomeScreenController from the observation data -->
+                              <VBox fx:id="speciesRow5" alignment="CENTER_LEFT" minHeight="51.0" prefHeight="51.0" prefWidth="693.0" style="-fx-background-radius: 12;" styleClass="background" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="693.0">
+                                       <children>
+                                          <Label fx:id="speciesName5" prefWidth="195.0" styleClass="subheading" text="Species">
+                                             <HBox.margin>
+                                                <Insets left="12.0" right="12.0" top="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <!-- Pushes the count to the right edge, whatever the name and badge are -->
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="speciesStat5" alignment="CENTER_RIGHT" prefWidth="215.0" text="0 birds" textFill="#388e3c">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="12.0" top="8.0" />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets right="2.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <ProgressBar fx:id="speciesBar5" maxWidth="Infinity" prefHeight="20.0" progress="0.0" style="-fx-accent: #17352D; -fx-control-inner-background: #FFFFFF;" styleClass="species-bar">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" left="12.0" right="12.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ProgressBar>
+                                 </children>
                               </VBox>
                            </children></VBox>
                      </children>

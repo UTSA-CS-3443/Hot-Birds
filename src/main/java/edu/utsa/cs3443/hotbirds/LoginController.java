@@ -1,17 +1,14 @@
 package edu.utsa.cs3443.hotbirds;
 //test comment 11/11/26 - zaid
 import edu.utsa.cs3443.hotbirds.model.UserManager;
+import edu.utsa.cs3443.hotbirds.util.NavigationUtil;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class LoginController {
+public class LoginController implements NavigationUtil.StageAware {
     @FXML
     private TextField emailField;
 
@@ -28,7 +25,6 @@ public class LoginController {
     }
 
     private Stage mainStage;
-    NavigationUtil navigator = new NavigationUtil();
 
 
     @FXML
@@ -50,7 +46,7 @@ public class LoginController {
         boolean authenticated = userManager.login(emailField.getText(), passwordField.getText());
         passwordField.clear();
         if (authenticated) {
-            navigator.homeScreen(mainStage);
+            NavigationUtil.switchScreen(mainStage, "home-screen.fxml");
         } else {
             errorLabel.setText("Email or password is incorrect.");
         }
@@ -58,19 +54,12 @@ public class LoginController {
 
     @FXML
     private void onCreateAccount() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layouts/create-account-screen.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-
-            CreateAccountController createAccountController = fxmlLoader.getController();
-            createAccountController.setMainStage(mainStage);
+        CreateAccountController createAccountController =
+                NavigationUtil.switchScreen(mainStage, "create-account-screen.fxml");
+        if (createAccountController != null) {
             createAccountController.setUserManager(userManager);
-
-            mainStage.setScene(scene);
-        } catch (IOException e) {
-            if (errorLabel != null) {
-                errorLabel.setText("Unable to open the create-account screen: " + e.getMessage());
-            }
+        } else if (errorLabel != null) {
+            errorLabel.setText("Unable to open the create-account screen.");
         }
     }
 
@@ -79,4 +68,5 @@ public class LoginController {
             errorLabel.setText(message);
         }
     }
+
 }

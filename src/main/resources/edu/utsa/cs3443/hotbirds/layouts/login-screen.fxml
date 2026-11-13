@@ -4,26 +4,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefWidth="306.0" styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.LoginController">
    <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0">
+      <StackPane prefHeight="768.0" prefWidth="1024.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="528.0" prefWidth="1030.0" spacing="12.0" styleClass="dialog-card" stylesheets="@../styles/theme.css">
-                <padding>
-                    <Insets bottom="24.0" left="24.0" top="24.0" />
-                </padding>
-            
-                <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" styleClass="heading" text="Sign in" />
-                <TextField fx:id="emailField" accessibleText="Email or username" promptText="Email or username" styleClass="input-field" />
-                <PasswordField fx:id="passwordField" accessibleText="Password" promptText="Password" styleClass="input-field" />
-                <Label fx:id="errorLabel" wrapText="true" />
-                <Button defaultButton="true" maxWidth="Infinity" onAction="#onSignIn" styleClass="next-button" text="Sign in" />
-                <Button maxWidth="Infinity" onAction="#onCreateAccount" styleClass="edit-button" text="Create account" />
-               <HBox.margin>
-                  <Insets bottom="120.0" left="30.0" right="30.0" top="120.0" />
-               </HBox.margin>
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="340.0" spacing="12.0">
+               <children>
+                  <Label styleClass="page-subtitle" text="WELCOME BACK" />
+                  <Label styleClass="page-title" text="Sign in">
+                     <VBox.margin>
+                        <Insets bottom="6.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="emailField" accessibleText="Email or username" maxWidth="Infinity" promptText="Email or username" styleClass="input-field" />
+                  <PasswordField fx:id="passwordField" accessibleText="Password" maxWidth="Infinity" promptText="Password" styleClass="input-field" />
+                  <Label fx:id="errorLabel" styleClass="subtext" wrapText="true" />
+                  <Button defaultButton="true" maxWidth="Infinity" onAction="#onSignIn" styleClass="next-button" text="Sign in" />
+                  <Button maxWidth="Infinity" onAction="#onCreateAccount" styleClass="edit-button" text="Create account" />
+               </children>
             </VBox>
          </children>
-      </HBox>
+      </StackPane>
    </children>
-</StackPane>
+</AnchorPane>

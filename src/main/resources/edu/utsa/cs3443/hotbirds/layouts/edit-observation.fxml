@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.AddObservationController">
+<StackPane styleClass="dialog-root" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.EditObservationController">
     <VBox maxHeight="-Infinity" maxWidth="676.0" spacing="22.0" styleClass="dialog-card">
         <VBox prefHeight="51.0" prefWidth="218.0" spacing="4.0">
          <HBox prefHeight="134.0" prefWidth="403.0">
@@ -43,8 +43,10 @@
             <TextField fx:id="locationField" promptText="Address or park name" styleClass="input-field" />
         </VBox>
 
+        <Label fx:id="errorLabel" styleClass="subtext" wrapText="true" />
+
         <HBox alignment="CENTER_RIGHT" spacing="12.0">
-         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="91.0" styleClass="delete-button-big" text="Delete" textFill="WHITE">
+         <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0" prefWidth="91.0" styleClass="delete-button-big" text="Delete" textFill="WHITE">
             <font>
                <Font name="System Bold" size="12.0" />
             </font>

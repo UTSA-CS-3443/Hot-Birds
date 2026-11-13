@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +17,10 @@ public class UserManager {
     private static final class SharedInstance {
         private static final UserManager INSTANCE = createDefaultManager();
     }
+
+    // The CSV's first line; written back out every save so the file stays readable
+    private static final String HEADER = "Username,First name,Last name,Email Address,Password";
+    private static final String HASH_PREFIX = "$pbkdf2-sha256$";
 
     private File usersFile;
     private final List<User> users = new ArrayList<>();
@@ -129,7 +132,9 @@ public class UserManager {
         // Write the complete account list first, then replace the destination to avoid partial files.
         Path temporaryFile = Files.createTempFile(parent, "users-", ".tmp");
         try {
-            List<String> rows = users.stream().map(UserManager::serialize).toList();
+            List<String> rows = new ArrayList<>();
+            rows.add(HEADER);
+            users.stream().map(UserManager::serialize).forEach(rows::add);
             Files.write(temporaryFile, rows, StandardCharsets.UTF_8);
             try {
                 Files.move(temporaryFile, destination, StandardCopyOption.REPLACE_EXISTING,
@@ -157,23 +162,22 @@ public class UserManager {
         // Build a complete replacement before changing the in-memory list, so malformed data is not partially loaded.
         List<User> loadedUsers = new ArrayList<>();
         if (Files.exists(path)) {
-            int lineNumber = 0;
-            for (String line : Files.readAllLines(path, StandardCharsets.UTF_8)) {
-                lineNumber++;
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            for (int i = 1; i < lines.size(); i++) { // line 0 is the header
+                String line = lines.get(i);
                 if (line.isBlank()) {
                     continue;
                 }
 
-                String[] fields = line.split("\\t", -1);
-                if (fields.length != 5) {
-                    throw new IOException("Invalid user record at line " + lineNumber);
+                List<String> fields = splitCsv(line);
+                if (fields.size() != 5) {
+                    System.out.println("Skipping bad user row at line " + (i + 1));
+                    continue;
                 }
                 try {
-                    loadedUsers.add(User.fromStoredPassword(
-                            decode(fields[1]), decode(fields[2]), decode(fields[0]),
-                            decode(fields[4]), decode(fields[3])));
+                    loadedUsers.add(readUser(fields));
                 } catch (IllegalArgumentException exception) {
-                    throw new IOException("Invalid user record at line " + lineNumber, exception);
+                    System.out.println("Skipping bad user row at line " + (i + 1));
                 }
             }
         }
@@ -181,6 +185,21 @@ public class UserManager {
         users.clear();
         users.addAll(loadedUsers);
         activeUser = null;
+    }
+
+     //Turns one CSV row into a User. A password already saved as a hash is kept as is;
+     //one still written in plain text is hashed now and saved that way from the next write on.
+    private static User readUser(List<String> fields) {
+        String username = fields.get(0);
+        String firstName = fields.get(1);
+        String lastName = fields.get(2);
+        String email = fields.get(3);
+        String password = fields.get(4);
+
+        if (password.startsWith(HASH_PREFIX)) {
+            return User.fromStoredPassword(firstName, lastName, username, password, email);
+        }
+        return new User(firstName, lastName, username, password, email);
     }
 
     private User findByUsername(String username) {
@@ -204,25 +223,47 @@ public class UserManager {
     }
 
     private static String serialize(User user) {
-        // Base64 keeps tabs/newlines in fields from breaking the tab-separated record structure.
-        return encode(user.getUsername()) + "\t"
-                + encode(user.getFirstName()) + "\t"
-                + encode(user.getLastName()) + "\t"
-                + encode(user.getEmail()) + "\t"
-                + encode(user.getPassword());
+        return String.join(",",
+                csv(user.getUsername()), csv(user.getFirstName()), csv(user.getLastName()),
+                csv(user.getEmail()), csv(user.getPassword()));
     }
 
-    private static String encode(String value) {
-        return Base64.getEncoder().encodeToString(value.getBytes(StandardCharsets.UTF_8));
+    // Wraps a value in quotes only if it contains a comma or a quote of its own
+    private static String csv(String value) {
+        if (value.contains(",") || value.contains("\"")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
     }
 
-    private static String decode(String value) {
-        return new String(Base64.getDecoder().decode(value), StandardCharsets.UTF_8);
+    // Splits one CSV line, keeping commas that sit inside quotes
+    private static List<String> splitCsv(String line) {
+        List<String> out = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean inQuotes = false;
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '"') {
+                if (inQuotes && i + 1 < line.length() && line.charAt(i + 1) == '"') {
+                    sb.append('"');
+                    i++;
+                } else {
+                    inQuotes = !inQuotes;
+                }
+            } else if (c == ',' && !inQuotes) {
+                out.add(sb.toString().trim());
+                sb.setLength(0);
+            } else {
+                sb.append(c);
+            }
+        }
+        out.add(sb.toString().trim());
+        return out;
     }
 
     private static File defaultUsersFile() {
-        // Keep account data in a per-user application directory rather than the project working directory.
-        return Path.of(System.getProperty("user.home"), ".espi-hot-birds", "users.tsv").toFile();
+        // The project's own accounts file, so new sign-ups land where the rest of the data lives.
+        return Path.of("data", "users.csv").toFile();
     }
 
     private static UserManager createDefaultManager() {
