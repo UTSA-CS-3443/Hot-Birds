@@ -73,7 +73,7 @@ public class NavigationUtil {
      * appears. Use it to hand the popup its data, e.g. the row being edited, since the
      * popup blocks everything until it closes.
      */
-    public static <T> T showPopup(Window owner, String fxmlName, Consumer<Object> setUp) {
+    public static <T> T showPopup(Window owner, String fxmlName, Consumer<T> setUp) {
         try {
             FXMLLoader loader = new FXMLLoader(NavigationUtil.class.getResource(LAYOUTS + fxmlName));
             Parent root = loader.load();

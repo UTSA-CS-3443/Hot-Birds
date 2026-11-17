@@ -17,7 +17,7 @@
     </padding>
 
     <StackPane>
-        <Circle fx:id="avatar" fill="#EFE3A8" radius="16.0" />
+        <Circle fx:id="background" fill="#EFE3A8" radius="16.0" />
       <ImageView fx:id="birdIcon" fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons/bird.png" />

@@ -50,39 +50,41 @@ public class MyObservationsController implements NavigationUtil.StageAware {
 
         listView.setItems(observations);
 
-        // Tells the ListView how to build each row
-        listView.setCellFactory(lv -> new ListCell<>() {
-            private Node root; // The row's layout
-            private ObservationRowController rowController; // Controller for the row
-            // Runs once per cell: load the row layout a single time and reuse it
-            {
-                try {
-                    FXMLLoader loader = new FXMLLoader(MyObservationsController.class.getResource(
-                            "/edu/utsa/cs3443/hotbirds/layouts/observation-row.fxml"));
-                    root = loader.load();
-                    rowController = loader.getController();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            // Called by JavaFX whenever this cell is shown, scrolled to, or its data changes
-            @Override
-            public void updateItem(Observation item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    // No data for this cell so show nothing
-                    setGraphic(null);
-                } else {
-                    // Fill the row with this observation and connect its row Edit/Delete buttons to this controllers edit and delete methods (found below)
-                    rowController.setData(item, MyObservationsController.this::edit,
-                            MyObservationsController.this::delete);
-                    setGraphic(root); // display the row
-                }
-            }
-        });
+        // Tells the ListView to build each row with the class below
+        listView.setCellFactory(lv -> new ObservationCell());
     }
 
+    /**
+     * One cell of the ListView. The ListView reuses these as you scroll,
+     * so each one loads observation-row.fxml once and then just refills it.
+     */
+    private class ObservationCell extends ListCell<Observation> {
+        private Node root;                              // The row's layout
+        private ObservationRowController rowController; // Controller for that layout
+
+        ObservationCell() {
+            try {
+                FXMLLoader loader = new FXMLLoader(MyObservationsController.class.getResource("/edu/utsa/cs3443/hotbirds/layouts/observation-row.fxml"));
+                root = loader.load();
+                rowController = loader.getController();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // Called by JavaFX whenever this cell is shown, scrolled to, or its data changes
+        @Override
+        public void updateItem(Observation item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setGraphic(null); // no data for this cell, so show nothing
+            } else {
+                // Fill the row, and point its Edit/Delete buttons at the methods below
+                rowController.setData(item, MyObservationsController.this::edit, MyObservationsController.this::delete);
+                setGraphic(root); // display the row
+            }
+        }
+    }
 
     //Shows only the signed-in user's observations and updates the three count labels.
     //Called at startup and again after anything is added, edited or deleted.
@@ -130,9 +132,9 @@ public class MyObservationsController implements NavigationUtil.StageAware {
     @FXML
     public void edit(Observation observation) {
         // Open the edit popup with this row's values already filled in
-        // The lambda runs on the popup's controller after it's built but before it opens,
-        // which lets it be sent to that row
-        EditObservationController editor = NavigationUtil.showPopup(mainStage, "edit-observation.fxml", c -> ((EditObservationController) c).setObservation(observation));
+        // The lambda runs on the popup's controller after it is built but before it opens,
+        // which is the only chance to hand it this row; showPopup then waits for it to close.
+        EditObservationController editor = NavigationUtil.showPopup(mainStage, "edit-observation.fxml", c -> c.setObservation(observation));
         if (editor != null && (editor.isChanged() || editor.isDeleted())) {
             refreshList(); // saved or deleted from inside the popup
         }

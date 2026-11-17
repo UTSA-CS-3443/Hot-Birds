@@ -1,13 +1,13 @@
 package edu.utsa.cs3443.hotbirds.model;
 
+import edu.utsa.cs3443.hotbirds.util.CsvUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.AtomicMoveNotSupportedException;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +20,6 @@ public class UserManager {
 
     // The CSV's first line; written back out every save so the file stays readable
     private static final String HEADER = "Username,First name,Last name,Email Address,Password";
-    private static final String HASH_PREFIX = "$pbkdf2-sha256$";
 
     private File usersFile;
     private final List<User> users = new ArrayList<>();
@@ -122,6 +121,7 @@ public class UserManager {
         return usersFile;
     }
 
+    // Writes the header and every account back out to the CSV
     public synchronized void updateUserFile() throws IOException {
         Path destination = usersFile.toPath();
         Path parent = destination.getParent();
@@ -129,23 +129,12 @@ public class UserManager {
             Files.createDirectories(parent);
         }
 
-        // Write the complete account list first, then replace the destination to avoid partial files.
-        Path temporaryFile = Files.createTempFile(parent, "users-", ".tmp");
-        try {
-            List<String> rows = new ArrayList<>();
-            rows.add(HEADER);
-            users.stream().map(UserManager::serialize).forEach(rows::add);
-            Files.write(temporaryFile, rows, StandardCharsets.UTF_8);
-            try {
-                Files.move(temporaryFile, destination, StandardCopyOption.REPLACE_EXISTING,
-                        StandardCopyOption.ATOMIC_MOVE);
-            } catch (AtomicMoveNotSupportedException exception) {
-                // Some filesystems cannot atomically move files; still replace the destination.
-                Files.move(temporaryFile, destination, StandardCopyOption.REPLACE_EXISTING);
-            }
-        } finally {
-            Files.deleteIfExists(temporaryFile);
+        List<String> rows = new ArrayList<>();
+        rows.add(HEADER);
+        for (User user : users) {
+            rows.add(serialize(user));
         }
+        Files.write(destination, rows, StandardCharsets.UTF_8);
     }
 
     public synchronized String getActiveUser() {
@@ -169,7 +158,7 @@ public class UserManager {
                     continue;
                 }
 
-                List<String> fields = splitCsv(line);
+                List<String> fields = CsvUtil.split(line);
                 if (fields.size() != 5) {
                     System.out.println("Skipping bad user row at line " + (i + 1));
                     continue;
@@ -187,8 +176,8 @@ public class UserManager {
         activeUser = null;
     }
 
-     //Turns one CSV row into a User. A password already saved as a hash is kept as is;
-     //one still written in plain text is hashed now and saved that way from the next write on.
+    // Turns one CSV row into a User. The columns are read in header order:
+    // Username, First name, Last name, Email Address, Password.
     private static User readUser(List<String> fields) {
         String username = fields.get(0);
         String firstName = fields.get(1);
@@ -196,70 +185,46 @@ public class UserManager {
         String email = fields.get(3);
         String password = fields.get(4);
 
-        if (password.startsWith(HASH_PREFIX)) {
-            return User.fromStoredPassword(firstName, lastName, username, password, email);
-        }
         return new User(firstName, lastName, username, password, email);
     }
 
+    // The first account with this username, or null if nobody has it
     private User findByUsername(String username) {
         if (username == null) {
             return null;
         }
-        return users.stream()
-                .filter(user -> user.getUsername().equalsIgnoreCase(username.trim()))
-                .findFirst()
-                .orElse(null);
+        String wanted = username.trim();
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(wanted)) {
+                return user;
+            }
+        }
+        return null;
     }
 
+    // The first account with this email, or null if nobody has it
     private User findByEmail(String email) {
         if (email == null) {
             return null;
         }
-        return users.stream()
-                .filter(user -> user.getEmail().equalsIgnoreCase(email.trim()))
-                .findFirst()
-                .orElse(null);
-    }
-
-    private static String serialize(User user) {
-        return String.join(",",
-                csv(user.getUsername()), csv(user.getFirstName()), csv(user.getLastName()),
-                csv(user.getEmail()), csv(user.getPassword()));
-    }
-
-    // Wraps a value in quotes only if it contains a comma or a quote of its own
-    private static String csv(String value) {
-        if (value.contains(",") || value.contains("\"")) {
-            return "\"" + value.replace("\"", "\"\"") + "\"";
-        }
-        return value;
-    }
-
-    // Splits one CSV line, keeping commas that sit inside quotes
-    private static List<String> splitCsv(String line) {
-        List<String> out = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        boolean inQuotes = false;
-        for (int i = 0; i < line.length(); i++) {
-            char c = line.charAt(i);
-            if (c == '"') {
-                if (inQuotes && i + 1 < line.length() && line.charAt(i + 1) == '"') {
-                    sb.append('"');
-                    i++;
-                } else {
-                    inQuotes = !inQuotes;
-                }
-            } else if (c == ',' && !inQuotes) {
-                out.add(sb.toString().trim());
-                sb.setLength(0);
-            } else {
-                sb.append(c);
+        String wanted = email.trim();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(wanted)) {
+                return user;
             }
         }
-        out.add(sb.toString().trim());
-        return out;
+        return null;
     }
+
+    // One account as a CSV row, in the same column order as the header
+    private static String serialize(User user) {
+        return String.join(",",
+                CsvUtil.quote(user.getUsername()), CsvUtil.quote(user.getFirstName()),
+                CsvUtil.quote(user.getLastName()), CsvUtil.quote(user.getEmail()),
+                CsvUtil.quote(user.getPassword()));
+    }
+
+
 
     private static File defaultUsersFile() {
         // The project's own accounts file, so new sign-ups land where the rest of the data lives.

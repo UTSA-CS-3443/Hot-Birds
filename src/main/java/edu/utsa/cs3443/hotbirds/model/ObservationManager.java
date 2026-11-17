@@ -1,11 +1,15 @@
 package edu.utsa.cs3443.hotbirds.model;
 
+import edu.utsa.cs3443.hotbirds.util.CsvUtil;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ObservationManager {
@@ -118,32 +122,33 @@ public class ObservationManager {
         }
     }
 
+    // Turns one saved line back into an Observation, in header order:
+    // User, Species, Quantity, Time, AM or PM, Date, Location, Location Nickname
     public Observation convertLineToObservation(String line) {
-        List<String> f = splitCsv(line);
-        if (f.size() < 8) {
+        List<String> fields = CsvUtil.split(line);
+        if (fields.size() != 8) {
             return null; // malformed row
         }
         try {
-            String observer = f.get(0);
-            String species = f.get(1);
-            int count = Integer.parseInt(f.get(2));
-            String time = f.get(3);
-            String amPm = f.get(4);
-            String date = f.get(5);
-            String nickname = f.get(f.size() - 1);
-            // an unquoted address with commas gets split, so rejoin the middle columns
-            String address = String.join(", ", f.subList(6, f.size() - 1));
+            String observer = fields.get(0);
+            String species = fields.get(1);
+            int count = Integer.parseInt(fields.get(2));
+            String time = fields.get(3);
+            String amPm = fields.get(4);
+            String date = fields.get(5);
+            String address = fields.get(6);
+            String nickname = fields.get(7);
             return new Observation(observer, species, count, time, amPm, date, address, nickname);
         } catch (NumberFormatException e) {
-            return null;
+            return null; // the quantity column wasn't a number
         }
     }
 
     public String convertObservationToLine(Observation o) {
         return String.join(",",
-                csv(o.getObserver()), csv(o.getSpecies()), String.valueOf(o.getCount()),
-                csv(o.getTime()), csv(o.getAmPm()), csv(o.getDate()),
-                csv(o.getAddress()), csv(o.getLocation()));
+                CsvUtil.quote(o.getObserver()), CsvUtil.quote(o.getSpecies()), String.valueOf(o.getCount()),
+                CsvUtil.quote(o.getTime()), CsvUtil.quote(o.getAmPm()), CsvUtil.quote(o.getDate()),
+                CsvUtil.quote(o.getAddress()), CsvUtil.quote(o.getLocation()));
     }
 
     // Adds the observation and writes the whole list back to the CSV
@@ -191,31 +196,32 @@ public class ObservationManager {
         return total;
     }
 
-     //Adds up how many birds of each species everyone has logged, biggest total first.
-     //The dashboard's "Species to Watch For" card reads the first five.
-    public java.util.LinkedHashMap<String, Integer> getBirdsBySpecies() {
+    // Adds up how many birds of each species everyone has logged, biggest total first.
+    // The dashboard's "Species to Watch For" card reads the first five.
+    public LinkedHashMap<String, Integer> getBirdsBySpecies() {
 
         // Step 1: add up the quantities, one running total per species.
         // The key is the species name, the value is the birds counted so far.
-        java.util.HashMap<String, Integer> totals = new java.util.HashMap<>();
+        HashMap<String, Integer> totals = new HashMap<>();
         for (Observation o : observationArrayList) {
-
-            // merge() means: if this species isn't in the map yet, put its count in;
-            // if it is, combine the old value and the new one with Integer::sum (old + new).
-            totals.merge(o.getSpecies(), o.getCount(), Integer::sum);
+            String species = o.getSpecies();
+            int soFar = totals.getOrDefault(species, 0); // 0 the first time we see it
+            totals.put(species, soFar + o.getCount());
         }
 
-        // Step 2: put the species names in order, biggest total first.
-        java.util.List<String> names = new ArrayList<>(totals.keySet());
-
-        // The comparator returns a negative number when x should come before y.
-        // Subtracting y's total from x's puts the BIGGER total first (descending).
-        names.sort((x, y) -> totals.get(y) - totals.get(x));
-
-        // Step 3: copy into a LinkedHashMap, which keeps the order things were added.
-        java.util.LinkedHashMap<String, Integer> sorted = new java.util.LinkedHashMap<>();
-        for (String name : names) {
-            sorted.put(name, totals.get(name));
+        // Step 2: pull the names out one at a time, biggest total first,
+        // and add each to the result. A LinkedHashMap keeps that order.
+        LinkedHashMap<String, Integer> sorted = new LinkedHashMap<>();
+        List<String> remaining = new ArrayList<>(totals.keySet());
+        while (!remaining.isEmpty()) {
+            String biggest = remaining.get(0);
+            for (String name : remaining) {
+                if (totals.get(name) > totals.get(biggest)) {
+                    biggest = name;
+                }
+            }
+            sorted.put(biggest, totals.get(biggest));
+            remaining.remove(biggest);
         }
         return sorted;
     }
@@ -235,34 +241,5 @@ public class ObservationManager {
         return observationArrayList;
     }
 
-    private static String csv(String value) {
-        if (value.contains(",") || value.contains("\"")) {
-            return "\"" + value.replace("\"", "\"\"") + "\"";
-        }
-        return value;
-    }
 
-    private static List<String> splitCsv(String line) {
-        List<String> out = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        boolean inQuotes = false;
-        for (int i = 0; i < line.length(); i++) {
-            char c = line.charAt(i);
-            if (c == '"') {
-                if (inQuotes && i + 1 < line.length() && line.charAt(i + 1) == '"') {
-                    sb.append('"');
-                    i++;
-                } else {
-                    inQuotes = !inQuotes;
-                }
-            } else if (c == ',' && !inQuotes) {
-                out.add(sb.toString().trim());
-                sb.setLength(0);
-            } else {
-                sb.append(c);
-            }
-        }
-        out.add(sb.toString().trim());
-        return out;
-    }
 }
