@@ -2,13 +2,14 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="dark-green" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.LoginController">
    <children>
-      <ImageView fitHeight="682.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" translateY="43.0">
+      <ImageView fitHeight="782.0" fitWidth="1172.0" layoutX="-95.0" layoutY="-54.0" pickOnBounds="true" preserveRatio="true" translateY="43.0">
          <image>
             <Image url="@../images/backgrounds/backgroundbird.png" />
          </image>
@@ -16,9 +17,9 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000054" height="768.0" stroke="#0000008a" strokeType="INSIDE" width="1024.0" />
       <StackPane prefHeight="768.0" prefWidth="1024.0">
          <children>
-            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="400.0" spacing="12.0" styleClass="dialog-card" stylesheets="@../styles/theme.css">
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="400.0" prefHeight="345.0" prefWidth="400.0" spacing="12.0" styleClass="dialog-card" stylesheets="@../styles/theme.css">
                <children>
-                  <Label styleClass="page-subtitle" text="WELCOME BACK">
+                  <Label graphicTextGap="8.0" prefHeight="32.0" prefWidth="131.0" styleClass="page-subtitle" text="WELCOME BACK">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -40,6 +41,9 @@
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
+               <effect>
+                  <Shadow blurType="GAUSSIAN" height="47.38" radius="26.12" width="59.1" />
+               </effect>
             </VBox>
          </children>
       </StackPane>
