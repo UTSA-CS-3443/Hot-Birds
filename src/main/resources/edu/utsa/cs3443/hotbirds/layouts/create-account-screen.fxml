@@ -2,13 +2,21 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.CreateAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="dark-green" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.CreateAccountController">
    <children>
+      <ImageView fitHeight="682.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" translateY="43.0">
+         <image>
+            <Image url="@../images/backgrounds/backgroundbird.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000054" height="768.0" stroke="#00000054" strokeType="INSIDE" width="1024.0" />
       <StackPane prefHeight="768.0" prefWidth="1024.0">
          <children>
-            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="340.0" spacing="12.0">
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="400.0" spacing="12.0" styleClass="dialog-card">
                <children>
                   <Label styleClass="page-subtitle" text="WELCOME TO HOT BIRDS" />
                   <Label styleClass="page-title" text="Create account">

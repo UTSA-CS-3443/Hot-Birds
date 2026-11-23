@@ -2,15 +2,30 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="dark-green" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.LoginController">
    <children>
+      <ImageView fitHeight="682.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" translateY="43.0">
+         <image>
+            <Image url="@../images/backgrounds/backgroundbird.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000054" height="768.0" stroke="#0000008a" strokeType="INSIDE" width="1024.0" />
       <StackPane prefHeight="768.0" prefWidth="1024.0">
          <children>
-            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="340.0" spacing="12.0">
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="400.0" spacing="12.0" styleClass="dialog-card" stylesheets="@../styles/theme.css">
                <children>
-                  <Label styleClass="page-subtitle" text="WELCOME BACK" />
+                  <Label styleClass="page-subtitle" text="WELCOME BACK">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icons/app-icon-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
                   <Label styleClass="page-title" text="Sign in">
                      <VBox.margin>
                         <Insets bottom="6.0" />
@@ -22,6 +37,9 @@
                   <Button defaultButton="true" maxWidth="Infinity" onAction="#onSignIn" styleClass="next-button" text="Sign in" />
                   <Button maxWidth="Infinity" onAction="#onCreateAccount" styleClass="edit-button" text="Create account" />
                </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
             </VBox>
          </children>
       </StackPane>

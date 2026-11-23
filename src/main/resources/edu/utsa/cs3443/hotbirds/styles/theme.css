@@ -3,6 +3,7 @@
 .dark-green { -fx-background-color: #17352D; }
 .background { -fx-background-color: #f6f7f3; }
 .white { -fx-background-color: #ffffff; }
+.black { -fx-background-color: #000000; }
 
 .heading {
     -fx-text-fill: #18342C;
