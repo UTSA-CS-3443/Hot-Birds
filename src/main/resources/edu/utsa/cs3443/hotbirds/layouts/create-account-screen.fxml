@@ -18,7 +18,14 @@
          <children>
             <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="400.0" spacing="12.0" styleClass="dialog-card">
                <children>
-                  <Label styleClass="page-subtitle" text="WELCOME TO HOT BIRDS" />
+                  <Label styleClass="page-subtitle" text="WELCOME TO HOT BIRDS">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icons/app-icon-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
                   <Label styleClass="page-title" text="Create account">
                      <VBox.margin>
                         <Insets bottom="6.0" />
