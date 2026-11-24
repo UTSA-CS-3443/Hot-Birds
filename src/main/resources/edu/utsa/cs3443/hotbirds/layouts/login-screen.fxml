@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="dark-green" stylesheets="@../styles/theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.utsa.cs3443.hotbirds.controllers.LoginController">
    <children>
-      <ImageView fitHeight="782.0" fitWidth="1172.0" layoutX="-95.0" layoutY="-54.0" pickOnBounds="true" preserveRatio="true" translateY="43.0">
+      <ImageView pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/backgrounds/backgroundbird.png" />
          </image>
